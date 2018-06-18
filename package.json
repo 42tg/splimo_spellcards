@@ -1,0 +1,21 @@
+{
+  "name": "splimo_spellcards",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "react": "^16.4.1",
+    "react-color": "^2.14.1",
+    "react-dom": "^16.4.1",
+    "react-inline-editing": "^1.0.10",
+    "react-scripts": "1.1.4",
+    "store": "^2.0.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {}
+}
