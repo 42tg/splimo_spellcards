@@ -92,7 +92,7 @@ class EditableCard extends Card{
     }
 
     resetDefault = () => {
-      this.setState(() => { card: this.props.card})
+      this.setState(() => ({ card: this.props.card}))
     }
   
     colorPalette = () => {
