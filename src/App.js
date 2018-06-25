@@ -8,11 +8,11 @@ class App extends Component {
     super(props)
     
     const cards = store.get('cards') || []
-    console.log(cards)
     this.state = {
       cards : cards
     }
   }
+
   saveCard = (card) => {
     const newCards = this.state.cards
     newCards.push(card)
@@ -21,20 +21,18 @@ class App extends Component {
     })
     store.set('cards', newCards)
   }
+
   resetAll = () => {
-  
     this.setState({ cards: []})
     store.remove('cards')
   }
 
   deleteCard = (index) => {
     const fewerCards = this.state.cards.filter((card, i) => {
-      console.log(index, i, card)
       if(i === index) return undefined
       return card
     })
-    
-    console.log("deleting:", index, fewerCards)
+
     this.setState({
       cards: fewerCards
     })

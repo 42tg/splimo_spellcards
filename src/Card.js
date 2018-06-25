@@ -11,21 +11,21 @@ class Card extends Component{
               <tbody>
               <tr>
                 <th colSpan="6" className="name">
-                  <h2>{this.props.card.name} </h2>
+                  <h2>{this.props.card.name}</h2>
                 </th>
               </tr>
               <tr>
-                <th className="schwierigkeit">Schw.:</th>
+                <th className="">Schw.:</th>
                 <td className="schwierigkeit" colSpan="2">{this.props.card.schwierigkeit}</td>
-                <th className="zauberdauer">ZD:</th>
+                <th className="">ZD:</th>
                 <td className="zauberdauer" colSpan="2">{this.props.card.zauberdauer}</td>
               </tr>
               <tr>
-                <th className="kosten">Fokus:</th>
+                <th className="">Fokus:</th>
                 <td className="kosten">{this.props.card.kosten}</td>
-                <th className="reichweite">RW:</th>
+                <th className="">RW:</th>
                 <td className="reichweite">{this.props.card.reichweite}</td>
-                <th className="wirkungsdauer">WD:</th>
+                <th className="">WD:</th>
                 <td className="wirkungsdauer">{this.props.card.wirkungsdauer}</td>
                 </tr>
                 <tr>
@@ -37,10 +37,10 @@ class Card extends Component{
                   <th className="erfolgsgrade" colSpan="6">Erfolgsgrade:</th>
                 </tr>
                 <tr>
-                  <td className="verbesserung" colSpan="6">{this.props.card.erfolgsgrade.verbesserung}</td>
+                  <td className="verbesserung" colSpan="6">{this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung || ''}</td>
                 </tr>
                 <tr>
-                  <td className="enchanted" colSpan="6">{this.props.card.erfolgsgrade.enchanted}</td>
+                  <td className="enchanted" colSpan="6">{this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.enchanted || ''}</td>
                 </tr>
                 </tbody>
               </table>
