@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import EditableLabel from 'react-inline-editing'
 import { BlockPicker } from 'react-color'
 import _ from 'lodash'
+
 class Card extends Component{
     render(){
       return (
@@ -37,10 +38,10 @@ class Card extends Component{
                   <th className="erfolgsgrade" colSpan="6">Erfolgsgrade:</th>
                 </tr>
                 <tr>
-                  <td className="verbesserung" colSpan="6">{this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung || ''}</td>
+                  <td className="verbesserung" colSpan="6">{(this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung) || ''}</td>
                 </tr>
                 <tr>
-                  <td className="enchanted" colSpan="6">{this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.enchanted || ''}</td>
+                  <td className="enchanted" colSpan="6">{(this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.enchanted) || ''}</td>
                 </tr>
                 </tbody>
               </table>
@@ -73,6 +74,7 @@ class EditableCard extends Card{
       this.state = {
         card : this.props.card,
       }
+     
       this.saveSpell = this.saveSpell.bind(this)
     }
     
@@ -108,7 +110,7 @@ class EditableCard extends Card{
               <tbody>
               <tr>
                 <th colSpan="6" className="name">
-                  <h2><EditableLabel onFocusOut={(text) => {this.state.card.name = text; this.setState(this.state.card)}} text={this.state.card.name}/></h2>
+                  <h2><EditableLabel onFocusOut={(text) => {this.state.card.name = text; this.setState(this.state.card)}} text={this.state.card.name || ''}/></h2>
                 </th>
               </tr>
               <tr>
@@ -143,7 +145,7 @@ class EditableCard extends Card{
             </table>
           </div>
           <div className="noprint">
-            <button onClick={this.saveSpell}> Save </button> <button onClick={this.props.resetCallback} style={{backgroundColor: "red", color:"white"}}> Reset All </button>
+            <button id="saveSpell" onClick={this.saveSpell}> Save </button> <button id="resetAll" onClick={this.props.resetCallback} style={{backgroundColor: "red", color:"white"}}> Reset All </button>
           </div>
         </div>
       )
