@@ -2,4 +2,4 @@
 [![Coverage Status](https://coveralls.io/repos/github/42tg/splimo_spellcards/badge.svg?branch=master)](https://coveralls.io/github/42tg/splimo_spellcards?branch=master)
 # Spellcards Generator
 
-https://splimo-spellcards.herokuapp.com/
+https://42tg.github.io/splimo_spellcards/
