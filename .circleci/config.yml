@@ -34,7 +34,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: yarn test --coverage --ci --reporters=default --reporters=jest-junit --runInBand
+      - run: yarn test -- --coverage --ci --reporters=default --reporters=jest-junit --runInBand
       - store_test_results:
           path: junit.xml
 
