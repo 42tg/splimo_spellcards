@@ -37,5 +37,6 @@ jobs:
       - run: yarn test -- --coverage --ci --reporters=default --reporters=jest-junit --runInBand
       - store_test_results:
           path: junit.xml
-
+      - store_artifacts:
+          path: junit.xml
 
