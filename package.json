@@ -29,9 +29,10 @@
     ]
   },
   "devDependencies": {
+    "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "react-addons-test-utils": "^15.6.2",
-    "coveralls": "^3.0.1"
+    "jest-junit": "^5.1.0",
+    "react-addons-test-utils": "^15.6.2"
   }
 }
