@@ -1,6 +1,6 @@
 {
   "name": "splimo_spellcards",
-  "homepage": "https://42tg.github.io/splimo_spellcards",
+  "homepage": "https://spellcards.42tg.de/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
