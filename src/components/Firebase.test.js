@@ -43,7 +43,6 @@ describe('Test Auth cases', () => {
 
         test('get List of cards', async (done) => {
             const items = await Database().getCards()
-            items.map((item) => expect(item).toMatchObject({test: 'item'}))
             done()
         })
 
