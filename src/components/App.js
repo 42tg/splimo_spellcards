@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import {Card, EditableCard} from './Card.js'
+import {Auth, Database} from './Firebase'
+import {LoginForm} from './LoginForm'
 import './App.css'
-import store from 'store'
 
 class App extends Component {  
   constructor(props) {
     super(props)
     
-    const cards = store.get('cards') || []
+    const cards = []
     this.state = {
+      auth : {isLoggedIn : false},
       cards : cards
     }
   }
@@ -19,35 +21,45 @@ class App extends Component {
     this.setState({
       cards: newCards
     })
-    store.set('cards', newCards)
+    Database().addCard(card)
   }
 
   resetAll = () => {
+    Database().deleteAllCards()
     this.setState({ cards: []})
-    store.remove('cards')
   }
 
-  deleteCard = (index) => {
-    const fewerCards = this.state.cards.filter((card, i) => {
-      if(i === index) return undefined
-      return card
-    })
+  deleteCard = async (index) => {
+    Database().deleteCard(index)
+    
+    const fewerCards = await Database().getCards()
 
     this.setState({
       cards: fewerCards
     })
-    store.set('cards',fewerCards)
+
   }
 
   render() {
     return (
       <div className="App">
-        <EditableCard saveCallback={this.saveCard} resetCallback={this.resetAll}/>
-        <div>
-        {this.state.cards.map((cardData, i) => {        
-           return (<Card key={i} card={cardData} index={i} deleteFunction={this.deleteCard}/>) 
-        })}
-        </div>
+        {!this.state.auth.isLoggedIn &&
+          <LoginForm onSubmit={async (value, e) => {
+            e.preventDefault(); 
+            await Auth().login(value.login, value.password).catch((err)=> console.log(err));
+            const cards = await Database().getCards()
+            this.setState({auth: {isLoggedIn: Auth().isLoggedIn()}, cards: cards})} 
+          }/>
+        }
+        {this.state.auth.isLoggedIn &&
+          (
+          <div>
+            <EditableCard saveCallback={this.saveCard} resetCallback={this.resetAll}/>
+            {this.state.cards.map((cardData, i) => {        
+              return (<Card key={i} card={cardData} index={cardData.id} deleteFunction={this.deleteCard}/>) 
+            })}
+          </div>
+        )}
       </div>
     );
   }

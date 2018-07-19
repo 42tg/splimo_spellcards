@@ -75,7 +75,6 @@ describe('Test Auth cases', () => {
             const shouldBreak = function() {
                 Database()
             }
-
             expect(shouldBreak).toThrowError()
         })
 

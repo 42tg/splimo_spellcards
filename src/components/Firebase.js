@@ -23,7 +23,8 @@ export const Auth = function() {
             return user.toJSON()  
         },
         login: function(email, password) { 
-            return new Promise((resolve, reject) => { 
+            return new Promise((resolve, reject) => {
+                console.log('logging in with', email) 
                 firebase.auth()
                 .signInWithEmailAndPassword(email, password).then(resolve)
                 .catch(reject)
@@ -65,7 +66,7 @@ export const Database = function() {
             return new Promise(async (resolve,reject) => {
                 try{ 
                     const ref = await firebase.database().ref(`cards/${userId}`).once('value')
-                    const result = new Array()
+                    const result = []
                     ref.forEach((item) => {
                         const tmp = item.val()
                         tmp.id = item.key
@@ -84,6 +85,16 @@ export const Database = function() {
                     resolve()
                 } catch (err){
                     reject(err) //cannot test this need depency injection
+                }
+            })
+        },
+        deleteCard: function(cardId) {
+            return new Promise( async (resolve, reject) => {
+                try {
+                    await firebase.database().ref(`cards/${userId}/${cardId}`).remove()
+                    resolve()
+                } catch(err) {
+                    reject (err)
                 }
             })
         }
