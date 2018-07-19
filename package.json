@@ -17,9 +17,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts test --env=jsdom --coverage",
+    "coverage": "react-scripts test --coverage",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "jest": {
@@ -34,6 +34,8 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest-junit": "^5.1.0",
+    "jsdom": "^11.11.0",
+    "jsdom-global": "^3.0.2",
     "react-addons-test-utils": "^15.6.2"
   }
 }

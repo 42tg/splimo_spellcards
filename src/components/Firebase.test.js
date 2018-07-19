@@ -3,7 +3,7 @@ import {Auth, Database} from './Firebase'
 
 
 describe('Test Auth cases', () => {
-    jest.mock('firebase', () => require('firebase/firebase-browser.js'));
+  
     test('if user is not logged in initialy', () => {
         expect(Auth().isLoggedIn()).toBe(false)
     })
