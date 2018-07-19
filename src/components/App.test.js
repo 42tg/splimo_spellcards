@@ -6,7 +6,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import App from './App';
-
+import {Auth} from './Firebase'
 Enzyme.configure({ adapter: new Adapter() });
 
 const TestCard = {
@@ -29,8 +29,11 @@ describe('Mount the app Card', () => {
   const appWrapper = Enzyme.mount(
       <App/>
   )
-  test('save Function from App', () => {
-    appWrapper.instance().saveCard(TestCard);
+  
+  test('save Function from App', async (done) => {
+    await Auth().login('test@42tg.de', 'test1234')
+    appWrapper.instance().saveCard(TestCard)
+    done()
   })
   test('delete Function from App', () => {
     appWrapper.instance().deleteCard(0)
@@ -44,6 +47,7 @@ describe('Mount the app Card', () => {
     appWrapper.instance().deleteCard(1)
     appWrapper.instance().resetAll()
   })
+  
 
 })
 

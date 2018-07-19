@@ -21,35 +21,36 @@ class App extends Component {
     this.setState({
       cards: newCards
     })
-    Database().addCard(card)
+    Database().addCard(card).catch(console.error)
   }
 
   resetAll = () => {
-    Database().deleteAllCards()
+    Database().deleteAllCards().catch(console.error)
     this.setState({ cards: []})
   }
 
   deleteCard = async (index) => {
-    Database().deleteCard(index)
+    Database().deleteCard(index).catch(console.error)
     
-    const fewerCards = await Database().getCards()
+    const fewerCards = await Database().getCards().catch(console.error)
 
     this.setState({
       cards: fewerCards
     })
 
   }
+  handleLogin = async (value, e) => {
+    e.preventDefault(); 
+    await Auth().login(value.login, value.password).catch((err)=> console.error(err));
+    const cards = await Database().getCards().catch(console.error)
+    this.setState({auth: {isLoggedIn: Auth().isLoggedIn()}, cards: cards})
+  }
 
   render() {
     return (
       <div className="App">
         {!this.state.auth.isLoggedIn &&
-          <LoginForm onSubmit={async (value, e) => {
-            e.preventDefault(); 
-            await Auth().login(value.login, value.password).catch((err)=> console.log(err));
-            const cards = await Database().getCards()
-            this.setState({auth: {isLoggedIn: Auth().isLoggedIn()}, cards: cards})} 
-          }/>
+          <LoginForm onSubmit={this.handleLogin}/>
         }
         {this.state.auth.isLoggedIn &&
           (

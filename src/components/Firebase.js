@@ -24,7 +24,6 @@ export const Auth = function() {
         },
         login: function(email, password) { 
             return new Promise((resolve, reject) => {
-                console.log('logging in with', email) 
                 firebase.auth()
                 .signInWithEmailAndPassword(email, password).then(resolve)
                 .catch(reject)
