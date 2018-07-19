@@ -1,0 +1,92 @@
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
+
+
+const config = {
+    apiKey: "AIzaSyBRod4BNKoK7dDHPH6X3vMeaCuoCb9oOuo",
+    authDomain: "splittermond-fd59e.firebaseapp.com",
+    databaseURL: "https://splittermond-fd59e.firebaseio.com",
+    projectId: "splittermond-fd59e",
+    storageBucket: "splittermond-fd59e.appspot.com",
+    messagingSenderId: "828939015214"
+}
+
+firebase.initializeApp(config)
+
+export const Auth = function() {
+    let user = firebase.auth().currentUser;
+    return {
+        isLoggedIn : function() { return user != null},
+        getUID: function() { return user.uid || null},
+        getUserData : function() { 
+            if(user == null) return null
+            return user.toJSON()  
+        },
+        login: function(email, password) { 
+            return new Promise((resolve, reject) => { 
+                firebase.auth()
+                .signInWithEmailAndPassword(email, password).then(resolve)
+                .catch(reject)
+            })
+        },
+        logout: function() {
+            return new Promise(async (resolve, reject) => {
+                if (user == null) reject()
+                await firebase.auth().signOut()
+                resolve()
+            })
+        },
+        signUp: function(email, password) {
+            return new Promise((resolve, reject) => { 
+                firebase.auth()
+                .createUserWithEmailAndPassword(email, password).then(resolve)
+                .catch(reject)
+            })
+        }
+    } 
+}
+
+export const Database = function() {
+
+    if(firebase.auth().currentUser == null) throw new Error("User is not logged in please handle that first")
+    const userId = firebase.auth().currentUser.uid
+    return {
+        addCard : function(card) {
+            return new Promise(async (resolve, reject) => {
+                try{
+                    await firebase.database().ref(`cards/${userId}`).push(card)
+                    resolve()
+                } catch (err){
+                    reject(err)
+                }
+            })
+        },
+        getCards: function(){
+            return new Promise(async (resolve,reject) => {
+                try{ 
+                    const ref = await firebase.database().ref(`cards/${userId}`).once('value')
+                    const result = new Array()
+                    ref.forEach((item) => {
+                        const tmp = item.val()
+                        tmp.id = item.key
+                        result.push(tmp)
+                    })
+                    resolve(result)
+                } catch (err) {
+                    reject(err)
+                }
+            })
+        },
+        deleteAllCards: function(){
+            return new Promise(async(resolve, reject) => {
+                try{
+                    await firebase.database().ref(`cards/${userId}`).remove()
+                    resolve()
+                } catch (err){
+                    reject(err)
+                }
+            })
+        }
+    }
+}
