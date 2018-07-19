@@ -1,7 +1,5 @@
 import {Auth, Database} from './Firebase'
 
-
-
 describe('Test Auth cases', () => {
   
     test('if user is not logged in initialy', () => {
@@ -55,9 +53,32 @@ describe('Test Auth cases', () => {
         })
 
         afterAll(async (done) => {
-            
             await Auth().logout()
             done()
         })
+    })
+
+    describe('test errors', () => {
+        test('getUser Data without login', async () => {
+            expect(Auth().getUserData()).toBeNull()
+        })
+
+        test('rejected logout', (done) => {
+            Auth().logout().catch(() => done())
+        })
+        
+        test('rejected login', (done) => {
+            Auth().login('invalid', 'user').catch(() => done())
+        })
+
+        test('Database access without been logged in', () => {
+            const shouldBreak = function() {
+                Database()
+            }
+
+            expect(shouldBreak).toThrowError()
+        })
+
+
     })
 })

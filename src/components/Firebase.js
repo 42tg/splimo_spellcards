@@ -18,7 +18,6 @@ export const Auth = function() {
     let user = firebase.auth().currentUser;
     return {
         isLoggedIn : function() { return user != null},
-        getUID: function() { return user.uid || null},
         getUserData : function() { 
             if(user == null) return null
             return user.toJSON()  
@@ -58,7 +57,7 @@ export const Database = function() {
                     await firebase.database().ref(`cards/${userId}`).push(card)
                     resolve()
                 } catch (err){
-                    reject(err)
+                    reject(err) //cannot test this need depency injection
                 }
             })
         },
@@ -74,7 +73,7 @@ export const Database = function() {
                     })
                     resolve(result)
                 } catch (err) {
-                    reject(err)
+                    reject(err) //cannot test this need depency injection
                 }
             })
         },
@@ -84,7 +83,7 @@ export const Database = function() {
                     await firebase.database().ref(`cards/${userId}`).remove()
                     resolve()
                 } catch (err){
-                    reject(err)
+                    reject(err) //cannot test this need depency injection
                 }
             })
         }
