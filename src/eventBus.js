@@ -1,13 +1,13 @@
 class EventBus{
-  async register(eventType, callback){
-    if(!this[eventType]) this[eventType] = []
-    this[eventType].push(callback)
+  events = {}
+  async on(eventType, callback){
+    if(!this.events[eventType]) this.events[eventType] = []
+    this.events[eventType].push(callback)
   }
   
-  async handle(eventType, eventData){
-    if(!this[eventType]) return
-    
-    return this[eventType].map(callback => callback(eventData))
+  async emit(eventType, eventData){
+    if(!this.events[eventType]) return
+    return Promise.all(this.events[eventType].map(callback => callback(eventData)))
   }
 }
 
