@@ -3,5 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import {EventBus} from './eventBus'
+ReactDOM.render(<App bus={new EventBus()} />, document.getElementById('root'));
 registerServiceWorker();

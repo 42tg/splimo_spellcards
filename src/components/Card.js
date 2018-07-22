@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import EditableLabel from 'react-inline-editing'
 import { BlockPicker } from 'react-color'
 import _ from 'lodash'
+import { EventTypes } from '../eventBus';
 
 class Card extends Component{
     render(){
       return (
           <div className={`block`} style={{backgroundColor: this.props.card.color}}>
-            <button className="deleteButton" onClick={() => this.props.deleteFunction(this.props.index)}> Löschen </button>
+            <button className="deleteButton" onClick={() => this.props.bus.emit(EventTypes.CARD_DELETED, this.props.index)}> Löschen </button>
             <table>
               <tbody>
               <tr>
@@ -78,8 +79,12 @@ class EditableCard extends Card{
       this.saveSpell = this.saveSpell.bind(this)
     }
     
-    saveSpell(){
-      this.props.saveCallback(_.clone((this.state.card)))
+    saveSpell = () => {
+      this.props.bus.emit(EventTypes.CARD_ADDED, _.clone((this.state.card)))
+    }
+
+    deleteAll = () =>{
+      this.props.bus.emit(EventTypes.CARD_DELETE_ALL)
     }
 
     handleColorChange = (color) => {
@@ -145,7 +150,7 @@ class EditableCard extends Card{
             </table>
           </div>
           <div className="noprint">
-            <button id="saveSpell" onClick={this.saveSpell}> Save </button> <button id="resetAll" onClick={this.props.resetCallback} style={{backgroundColor: "red", color:"white"}}> Reset All </button>
+            <button id="saveSpell" onClick={this.saveSpell}> Save </button> <button id="deleteAll" onClick={this.deleteAll} style={{backgroundColor: "red", color:"white"}}> Delete All </button>
           </div>
         </div>
       )
