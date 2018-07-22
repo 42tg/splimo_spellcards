@@ -1,7 +1,7 @@
 import 'jsdom-global/register';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
+import {EventBus} from '../eventBus'
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -26,8 +26,9 @@ const TestCard = {
   }
 }
 describe('Mount the app Card', () => {
+  const Bus = new EventBus()
   const appWrapper = Enzyme.mount(
-      <App/>
+      <App bus={Bus}/>
   )
   
   test('save Function from App', async (done) => {

@@ -1,10 +1,12 @@
 import 'jsdom-global/register';
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+
+
 
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import PropTypes from 'prop-types';
+import {EventBus, EventTypes} from '../eventBus'
 
 import {Card, EditableCard} from './Card';
 
@@ -27,8 +29,9 @@ const TestCard = {
     }
 }
 describe('Mount a Test Card', () => {
+    const Bus = new EventBus()
     const wrapper = Enzyme.mount(
-        <Card card={TestCard}/>
+        <Card card={TestCard} bus={Bus} />
     )
 
     test('card name displays correctly', () => {    
@@ -100,10 +103,14 @@ describe('Mount a Test Card', () => {
 })
 
 test('Editable Card', () => {
+    const Bus = new EventBus()
     const saveFunction = jest.fn()
     const resetFunction = jest.fn()
+    Bus.on(EventTypes.CARD_ADDED, saveFunction)
+    Bus.on(EventTypes.CARD_DELETE_ALL, resetFunction)
+
     const editableWrapper = Enzyme.shallow(
-        <EditableCard card={TestCard} saveCallback={saveFunction} resetCallback={resetFunction} />
+        <EditableCard card={TestCard} bus={Bus}/>
     )
     editableWrapper.instance().handleColorChange({hex: '#424242'})
     editableWrapper.instance().saveStateName()
@@ -112,7 +119,7 @@ test('Editable Card', () => {
 
     const saveSpell = editableWrapper.find('#saveSpell')
     saveSpell.simulate('click')
-    const resetAll = editableWrapper.find('#resetAll')
+    const resetAll = editableWrapper.find('#deleteAll')
     resetAll.simulate('click')
     expect(saveFunction.mock.calls.length).toBe(1);
     expect(resetFunction.mock.calls.length).toBe(1);
