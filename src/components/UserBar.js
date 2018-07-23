@@ -13,13 +13,13 @@ const inputStyle = {
   margin: '5px 10px',
 }
 class UserBar extends Component{
+  
   logout = () => {
     this.props.bus.emit(EventTypes.USER_LOGOUT)
   }
   
   render() {
-    const {user} = this.props
-    
+    const {user} = this.props  
     return (
       <div style={defaultStyle} className="userBar">
         {!user && 

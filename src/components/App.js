@@ -91,14 +91,13 @@ class App extends Component {
       <div className="App">
         <UserBar {...props} user={this.state.user} />
         {this.state.auth.isLoggedIn &&
-          (
           <div>
             <EditableCard {...props}/>
             {this.state.cards.map((cardData, i) => {
               return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
             })}
           </div>
-        )}
+        }
       </div>
     );
   }

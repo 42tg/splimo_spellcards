@@ -27,9 +27,7 @@ const TestCard = {
 }
 describe('Mount the app Card', () => {
   const Bus = new EventBus()
-  const appWrapper = Enzyme.shallow(
-      <App bus={Bus}/>
-  )
+  const appWrapper = Enzyme.shallow(<App bus={Bus}/>)
 
   test('save Function from App', async (done) => {
     firebase.auth.Auth.Persistence.LOCAL = firebase.auth.Auth.Persistence.NONE
@@ -37,14 +35,16 @@ describe('Mount the app Card', () => {
     await appWrapper.instance().saveCard(TestCard).catch(err => done.fail(err))
     done()
   })
+
   test('delete Function from App', (done) => {
     appWrapper.instance().deleteCard(0).then(done).catch(err => done.fail(err))
   })
+
   test('reset Function from App', (done) => {
     appWrapper.instance().resetAll().then(done).catch(err => done.fail(err))
   })
-  test('complete functionality from App', async (done) => {
 
+  test('complete functionality from App', async (done) => {
     const Card1 = _.clone(TestCard)
     const Card2 = _.clone(TestCard)
     await appWrapper.instance().saveCard(Card1).catch(err => done.fail(err))

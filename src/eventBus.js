@@ -1,12 +1,12 @@
-class EventBus{
+class EventBus {
   events = {}
-  async on(eventType, callback){
-    if(!this.events[eventType]) this.events[eventType] = []
+  async on(eventType, callback) {
+    if (!this.events[eventType]) this.events[eventType] = []
     this.events[eventType].push(callback)
   }
 
-  async emit(eventType, eventData){
-    if(!this.events[eventType]) return
+  async emit(eventType, eventData) {
+    if (!this.events[eventType]) return
     return Promise.all(this.events[eventType].map(callback => callback(eventData)))
   }
 }
@@ -18,4 +18,7 @@ const EventTypes = {
   USER_LOGIN: 'USER_LOGIN',
   USER_LOGOUT: 'USER_LOGOUT'
 }
-export {EventBus, EventTypes}
+export {
+  EventBus,
+  EventTypes
+}
