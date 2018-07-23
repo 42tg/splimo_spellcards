@@ -6,7 +6,8 @@ body {
 
 @media print {
     .block.editable,
-    .noprint {
+    .noprint,
+    .userBar {
         display: none;
     }
     .block:nth-child(9) {

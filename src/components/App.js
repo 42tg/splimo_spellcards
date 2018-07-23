@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
 
 import {Card, EditableCard} from './Card.js'
-import {LoginForm} from './LoginForm'
+import {UserBar} from './UserBar'
 
 import {EventTypes} from '../eventBus'
 import {Auth, Database} from './Firebase'
 
 import './App.css'
 
-class App extends Component {  
+class App extends Component {
   constructor(props) {
     super(props)
-    
+
     props.bus.on(EventTypes.CARD_ADDED, this.saveCard)
     props.bus.on(EventTypes.CARD_DELETED, this.deleteCard)
     props.bus.on(EventTypes.CARD_DELETE_ALL, this.resetAll)
-    
-    props.bus.on(EventTypes.USER_LOGIN, this.login)
 
+    props.bus.on(EventTypes.USER_LOGIN, this.login)
+    props.bus.on(EventTypes.USER_LOGOUT, this.logout)
     Auth().onAuthStateChanged(this.checkLoginState)
 
     const cards = []
@@ -26,21 +26,21 @@ class App extends Component {
       cards : cards
     }
   }
-  
+
 
   checkLoginState = async () => {
     const isLoggedIn = await Auth().isLoggedIn()
     if(isLoggedIn)
     {
       this.setState({
-        auth: { isLoggedIn : isLoggedIn}, 
+        auth: { isLoggedIn : isLoggedIn},
         user: await Auth().getUserData(),
         cards: await Database().getCards()
       })
     } else {
       this.setState({
-        auth: { isLoggedIn : isLoggedIn}, 
-        user: {},
+        auth: { isLoggedIn : isLoggedIn},
+        user: null,
         cards: []
       })
     }
@@ -68,7 +68,11 @@ class App extends Component {
       cards: fewerCards
     })
   }
-  
+
+  logout = async () => {
+    await Auth().logout().catch(console.error)
+
+  }
   login = async ({login, password}) => {
     await Auth().login(login,password)
     .catch(err => {
@@ -85,15 +89,13 @@ class App extends Component {
     const {props} = this
     return (
       <div className="App">
-        {!this.state.auth.isLoggedIn &&
-          <LoginForm {...props}/>
-        }
+        <UserBar {...props} user={this.state.user} />
         {this.state.auth.isLoggedIn &&
           (
           <div>
             <EditableCard {...props}/>
-            {this.state.cards.map((cardData, i) => {        
-              return (<Card {...props} key={i} card={cardData} index={cardData.id} />) 
+            {this.state.cards.map((cardData, i) => {
+              return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
             })}
           </div>
         )}
