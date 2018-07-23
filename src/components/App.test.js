@@ -27,10 +27,10 @@ const TestCard = {
 }
 describe('Mount the app Card', () => {
   const Bus = new EventBus()
-  const appWrapper = Enzyme.mount(
+  const appWrapper = Enzyme.shallow(
       <App bus={Bus}/>
   )
-  
+
   test('save Function from App', async (done) => {
     firebase.auth.Auth.Persistence.LOCAL = firebase.auth.Auth.Persistence.NONE
     await appWrapper.instance().login({login: 'test@42tg.de', password:'test1234'}).catch(err => done.fail(err))

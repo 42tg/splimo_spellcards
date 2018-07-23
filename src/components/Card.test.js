@@ -27,7 +27,7 @@ const TestCard = {
 }
 describe('Mount a Test Card', () => {
     const Bus = new EventBus()
-    const wrapper = Enzyme.mount(
+    const wrapper = Enzyme.shallow(
         <Card card={TestCard} bus={Bus} />
     )
 
@@ -81,7 +81,7 @@ describe('Mount a Test Card', () => {
         Object.assign(smallerTestCard, TestCard) //copy Object
 
         smallerTestCard.erfolgsgrade = undefined
-        const smallWrapper = Enzyme.mount(
+        const smallWrapper = Enzyme.shallow(
             <Card card={smallerTestCard}/>
         )
         const result = smallWrapper.find('.verbesserung')
@@ -93,7 +93,6 @@ describe('Mount a Test Card', () => {
         expect(result.text()).toBe(TestCard.erfolgsgrade.verbesserung)
     })
     test('card enchanted is displayed correctly',() => {
-
         const result = wrapper.find('.enchanted')
         expect(result.text()).toBe(TestCard.erfolgsgrade.enchanted)
     })
