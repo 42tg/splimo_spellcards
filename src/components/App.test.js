@@ -4,9 +4,9 @@ import React from 'react';
 import {EventBus} from '../eventBus'
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
+import firebase from 'firebase'
 import App from './App';
-import {Auth} from './Firebase'
+import _ from 'lodash'
 Enzyme.configure({ adapter: new Adapter() });
 
 const TestCard = {
@@ -32,29 +32,25 @@ describe('Mount the app Card', () => {
   )
   
   test('save Function from App', async (done) => {
-    await Auth().login('test@42tg.de', 'test1234')
-    appWrapper.instance().saveCard(TestCard)
+    firebase.auth.Auth.Persistence.LOCAL = firebase.auth.Auth.Persistence.NONE
+    await appWrapper.instance().login({login: 'test@42tg.de', password:'test1234'}).catch(err => done.fail(err))
+    await appWrapper.instance().saveCard(TestCard).catch(err => done.fail(err))
     done()
   })
-  test('delete Function from App', () => {
-    appWrapper.instance().deleteCard(0)
+  test('delete Function from App', (done) => {
+    appWrapper.instance().deleteCard(0).then(done).catch(err => done.fail(err))
   })
-  test('reset Function from App', () => {
-    appWrapper.instance().resetAll()
+  test('reset Function from App', (done) => {
+    appWrapper.instance().resetAll().then(done).catch(err => done.fail(err))
   })
-  test('complete functionality from App', () => {
-    appWrapper.instance().saveCard(TestCard)
-    appWrapper.instance().saveCard(TestCard)
-    appWrapper.instance().deleteCard(1)
-    appWrapper.instance().resetAll()
-  })
-  
+  test('complete functionality from App', async (done) => {
 
+    const Card1 = _.clone(TestCard)
+    const Card2 = _.clone(TestCard)
+    await appWrapper.instance().saveCard(Card1).catch(err => done.fail(err))
+    await appWrapper.instance().saveCard(Card2).catch(err => done.fail(err))
+    await appWrapper.instance().deleteCard(1).catch(err => done.fail(err))
+    await appWrapper.instance().resetAll().catch(err => done.fail(err))
+    done()
+  })
 })
-
-
-
-
-
-
-

@@ -16,16 +16,19 @@ firebase.initializeApp(config)
 
 export const Auth = function() {
     let user = firebase.auth().currentUser;
+
     return {
         isLoggedIn : function() { return user != null},
         getUserData : function() { 
             if(user == null) return null
             return user.toJSON()  
         },
-        login: function(email, password) { 
+        login: function(email, password, persistenceType) { 
             return new Promise((resolve, reject) => {
                 firebase.auth()
-                .signInWithEmailAndPassword(email, password).then(resolve)
+                .setPersistence(persistenceType || firebase.auth.Auth.Persistence.LOCAL)
+                .then(firebase.auth()
+                    .signInWithEmailAndPassword(email, password).then(resolve))
                 .catch(reject)
             })
         },
@@ -42,12 +45,14 @@ export const Auth = function() {
                 .createUserWithEmailAndPassword(email, password).then(resolve)
                 .catch(reject)
             })
+        },
+        onAuthStateChanged: function(callback){
+            firebase.auth().onAuthStateChanged(callback)
         }
     } 
 }
 
 export const Database = function() {
-
     if(firebase.auth().currentUser == null) throw new Error("User is not logged in please handle that first")
     const userId = firebase.auth().currentUser.uid
     return {
@@ -55,7 +60,7 @@ export const Database = function() {
             return new Promise(async (resolve, reject) => {
                 try{
                     const id = await firebase.database().ref(`cards/${userId}`).push(card)
-                    resolve(id)
+                    resolve(id.key)
                 } catch (err){
                     reject(err) //cannot test this need depency injection
                 }

@@ -18,10 +18,31 @@ class App extends Component {
     
     props.bus.on(EventTypes.USER_LOGIN, this.login)
 
+    Auth().onAuthStateChanged(this.checkLoginState)
+
     const cards = []
     this.state = {
       auth : {isLoggedIn : false},
       cards : cards
+    }
+  }
+  
+
+  checkLoginState = async () => {
+    const isLoggedIn = await Auth().isLoggedIn()
+    if(isLoggedIn)
+    {
+      this.setState({
+        auth: { isLoggedIn : isLoggedIn}, 
+        user: await Auth().getUserData(),
+        cards: await Database().getCards()
+      })
+    } else {
+      this.setState({
+        auth: { isLoggedIn : isLoggedIn}, 
+        user: {},
+        cards: []
+      })
     }
   }
 
@@ -50,20 +71,12 @@ class App extends Component {
   
   login = async ({login, password}) => {
     await Auth().login(login,password)
-    .then(async user => {
-      this.setState({
-        auth: { isLoggedIn : await Auth().isLoggedIn()}, 
-        user: await Auth().getUserData(),
-        cards: await Database().getCards()
-      })
-
-    })
     .catch(err => {
         if(err.code === 'auth/wrong-password') {
           console.log('User provides wrong Password')
         }
         else {
-          console.error('Login failed please try again', err)
+          console.error('Login failed please try again', login, password, err)
         }
     })
   }

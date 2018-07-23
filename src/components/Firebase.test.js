@@ -1,5 +1,5 @@
 import {Auth, Database} from './Firebase'
-
+import firebase from 'firebase'
 describe('Test Auth cases', () => {
   
     test('if user is not logged in initialy', () => {
@@ -7,13 +7,13 @@ describe('Test Auth cases', () => {
     })
 
     test('login User with email', async (done) => {
-        await Auth().login('test@42tg.de', 'test1234')
+        await Auth().login('test@42tg.de', 'test1234', firebase.auth.Auth.Persistence.NONE).catch(err => done.fail(err))
         expect(Auth().isLoggedIn()).toBe(true)
         done()
     })
 
     test('log user out', async (done) => {
-        await Auth().logout()
+        await Auth().logout().catch(err => done.fail(err))
         expect(Auth().isLoggedIn()).toBe(false)
         done()
     })
@@ -22,13 +22,14 @@ describe('Test Auth cases', () => {
         
         beforeAll(async (done) => {
             if(!Auth().isLoggedIn())
-                await Auth().login('test@42tg.de', 'test1234')
+                await Auth().login('test@42tg.de', 'test1234', firebase.auth.Auth.Persistence.NONE).catch(err => done.fail(err))
             done()
         })
 
-        test('Get User Data', () => {
-            const userData = Auth().getUserData()
+        test('Get User Data', async (done) => {
+            const userData = await Auth().getUserData()
             expect(userData.email).toBe('test@42tg.de')
+            done()
         })
 
         test('database connection', () => {
@@ -37,22 +38,22 @@ describe('Test Auth cases', () => {
         
         test('adding a card',async (done) => {
             const db = Database()
-            await db.addCard({test: 'item'})
+            await db.addCard({test: 'item'}).catch(err => done.fail(err))
             done()
         })
 
         test('get List of cards', async (done) => {
-            const items = await Database().getCards()
+            const items = await Database().getCards().catch(err => done.fail(err))
             done()
         })
 
         test('deleting all cards', async (done) => {
-            await Database().deleteAllCards()
+            await Database().deleteAllCards().catch(err => done.fail(err))
             done()
         })
 
         afterAll(async (done) => {
-            await Auth().logout()
+            await Auth().logout().catch(err => done.fail(err))
             done()
         })
     })
