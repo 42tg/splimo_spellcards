@@ -1,9 +1,6 @@
 import 'jsdom-global/register';
 import React from 'react';
 
-
-
-
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {EventBus, EventTypes} from '../eventBus'
@@ -34,7 +31,7 @@ describe('Mount a Test Card', () => {
         <Card card={TestCard} bus={Bus} />
     )
 
-    test('card name displays correctly', () => {    
+    test('card name displays correctly', () => {
         const result = wrapper.find('.name')
         expect(result.text()).toBe(TestCard.name)
     })
@@ -82,7 +79,7 @@ describe('Mount a Test Card', () => {
     test('card dont break if erfolgsgrade not exists', () => {
         const smallerTestCard = {}
         Object.assign(smallerTestCard, TestCard) //copy Object
-        
+
         smallerTestCard.erfolgsgrade = undefined
         const smallWrapper = Enzyme.mount(
             <Card card={smallerTestCard}/>
