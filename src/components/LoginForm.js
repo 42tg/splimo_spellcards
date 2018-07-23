@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { EventTypes } from '../eventBus';
 
 const defaultStyle = {
     textAlign: 'center',
@@ -25,10 +26,14 @@ class LoginForm extends Component{
             [key]: event.target.value
         })
     }
+    userLoggingIn = (e) => {
+        e.preventDefault()
+        this.props.bus.emit(EventTypes.USER_LOGIN, this.state)
+    }
     render(){
         return(
             <div style={defaultStyle}>
-                <form onSubmit={this.props.onSubmit.bind(null, this.state)}>
+                <form onSubmit={this.userLoggingIn}>
                     <input name="login" onKeyUp={this.saveValues.bind(null, 'login')} style={inputStyle} type="text" placeholder="Login"/> <input name="password" onKeyUp={this.saveValues.bind(null, 'password')} style={inputStyle} type="password" placeholder="Password"/><br/>
                     <button style={{ ...inputStyle, padding: '5px 10px'}} type="submit">Login</button>
                 </form>

@@ -54,8 +54,8 @@ export const Database = function() {
         addCard : function(card) {
             return new Promise(async (resolve, reject) => {
                 try{
-                    await firebase.database().ref(`cards/${userId}`).push(card)
-                    resolve()
+                    const id = await firebase.database().ref(`cards/${userId}`).push(card)
+                    resolve(id)
                 } catch (err){
                     reject(err) //cannot test this need depency injection
                 }

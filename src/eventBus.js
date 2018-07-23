@@ -14,6 +14,7 @@ class EventBus{
 const EventTypes = {
   CARD_ADDED: 'CARD_ADDED',
   CARD_DELETED: 'CARD_DELETED',
-  CARD_DELETE_ALL: 'CARD_DELETE_ALL'
+  CARD_DELETE_ALL: 'CARD_DELETE_ALL',
+  USER_LOGIN: 'USER_LOGIN'
 }
 export {EventBus, EventTypes}

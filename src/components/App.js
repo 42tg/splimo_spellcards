@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+
 import {Card, EditableCard} from './Card.js'
-import {EventTypes} from '../eventBus'
 import {LoginForm} from './LoginForm'
+
+import {EventTypes} from '../eventBus'
+import {Auth, Database} from './Firebase'
+
 import './App.css'
 
 class App extends Component {  
@@ -12,16 +16,18 @@ class App extends Component {
     props.bus.on(EventTypes.CARD_DELETED, this.deleteCard)
     props.bus.on(EventTypes.CARD_DELETE_ALL, this.resetAll)
     
+    props.bus.on(EventTypes.USER_LOGIN, this.login)
+
     const cards = []
     this.state = {
-      auth : {isLoggedIn : true},
+      auth : {isLoggedIn : false},
       cards : cards
     }
   }
 
   counter = 0
-  saveCard = (card) => {
-    card.id = this.counter++
+  saveCard = async (card) => {
+    card.id = await Database().addCard(card)
     const newCards = this.state.cards
     newCards.push(card)
     this.setState({
@@ -29,17 +35,39 @@ class App extends Component {
     })
   }
 
-  resetAll = () => {
+  resetAll = async () => {
+    await Database().deleteAllCards()
     this.setState({ cards: []})
   }
 
   deleteCard = async (index) => {
+    await Database().deleteCard(index)
     const fewerCards = this.state.cards.filter((card) => card.id !== index)
     this.setState({
       cards: fewerCards
     })
   }
   
+  login = async ({login, password}) => {
+    await Auth().login(login,password)
+    .then(async user => {
+      this.setState({
+        auth: { isLoggedIn : await Auth().isLoggedIn()}, 
+        user: await Auth().getUserData(),
+        cards: await Database().getCards()
+      })
+
+    })
+    .catch(err => {
+        if(err.code === 'auth/wrong-password') {
+          console.log('User provides wrong Password')
+        }
+        else {
+          console.error('Login failed please try again', err)
+        }
+    })
+  }
+
   render() {
     const {props} = this
     return (
