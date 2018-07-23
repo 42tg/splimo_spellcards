@@ -30,11 +30,12 @@ class LoginForm extends Component{
     e.preventDefault()
     this.props.bus.emit(EventTypes.USER_LOGIN, this.state)
   }
+
   render(){
     return(
       <div style={defaultStyle}>
-        <form onSubmit={this.userLoggingIn}>
-          <input name="login" onKeyUp={this.saveValues.bind(null, 'login')} style={inputStyle} type="text" placeholder="Login"/> <input name="password" onKeyUp={this.saveValues.bind(null, 'password')} style={inputStyle} type="password" placeholder="Password"/><br/>
+        <form id="loginForm" onSubmit={this.userLoggingIn}>
+          <input id="login" name="login" onKeyUp={this.saveValues.bind(null, 'login')} style={inputStyle} type="text" placeholder="Login"/> <input id="password" name="password" onKeyUp={this.saveValues.bind(null, 'password')} style={inputStyle} type="password" placeholder="Password"/><br/>
           <button style={{ ...inputStyle, padding: '5px 10px'}} type="submit">Login</button>
         </form>
       </div>
