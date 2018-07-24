@@ -21,6 +21,8 @@ class App extends Component {
 
     props.bus.on(EventTypes.USER_LOGIN, this.login)
     props.bus.on(EventTypes.USER_LOGOUT, this.logout)
+    props.bus.on(EventTypes.USER_GOOGLE_LOGIN, Auth().loginWithGoogle)
+
     Auth().onAuthStateChanged(this.checkLoginState)
 
     const cards = []
@@ -29,7 +31,6 @@ class App extends Component {
       cards : cards
     }
   }
-
 
   checkLoginState = async () => {
     const isLoggedIn = await Auth().isLoggedIn()
@@ -40,6 +41,7 @@ class App extends Component {
         user: await Auth().getUserData(),
         cards: await Database().getCards()
       })
+      console.log(this.state.user)
     } else {
       this.setState({
         auth: { isLoggedIn : isLoggedIn},

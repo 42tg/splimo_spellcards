@@ -30,6 +30,12 @@ export const Auth = function() {
         .catch(reject)
       })
     },
+    loginWithGoogle: function() {
+      return new Promise((resolve, reject) => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(resolve).catch(reject)
+      })
+    },
     logout: function() {
       return new Promise(async (resolve, reject) => {
         if (user == null) reject()
