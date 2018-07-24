@@ -41,7 +41,6 @@ class App extends Component {
         user: await Auth().getUserData(),
         cards: await Database().getCards()
       })
-      console.log(this.state.user)
     } else {
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
