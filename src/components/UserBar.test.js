@@ -3,15 +3,12 @@ import React from 'react';
 
 import {UserBar} from './UserBar'
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 
 import {EventBus, EventTypes} from '../eventBus'
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('userBar testing', () => {
   const bus = new EventBus()
-  
+
   test('mounts correctly', () => {
     Enzyme.shallow(<UserBar bus={bus}/>)
   })
@@ -42,7 +39,7 @@ describe('userBar testing', () => {
     expect(findMail.text()).toBe(user.displayName)
     expect(findLogoutButton.text()).toBe('Logout')
   })
-  
+
   test('Check event handling', () => {
     const user = {
       displayName: 'Testtimonial',
@@ -51,7 +48,7 @@ describe('userBar testing', () => {
     const callback = jest.fn()
     bus.on(EventTypes.USER_LOGOUT, callback)
     const wrapper = Enzyme.shallow(<UserBar bus={bus} user={user}/>)
-    
+
     wrapper.find('.userBar').find('button').simulate('click')
     expect(callback).toBeCalled()
   })

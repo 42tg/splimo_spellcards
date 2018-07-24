@@ -2,12 +2,10 @@ import 'jsdom-global/register';
 import React from 'react';
 
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+
 import {EventBus, EventTypes} from '../eventBus'
 
-import {Card, EditableCard} from './Card';
-
-Enzyme.configure({ adapter: new Adapter() });
+import {Card} from './Card';
 
 const TestCard = {
   name: 'TestCard',
@@ -28,6 +26,17 @@ const TestCard = {
 describe('Mount a Test Card', () => {
   const Bus = new EventBus()
   const wrapper = Enzyme.shallow(<Card card={TestCard} bus={Bus} />)
+
+  test('deleteButton is there', () => {
+    const result = wrapper.find('.deleteButton')
+    expect(result.text()).toBe('Löschen')
+  })
+
+  test('if deleteButton is not there when disabled', () => {
+    const otherWrapper = Enzyme.shallow(<Card card={TestCard} bus={Bus} hideDeleteButton={true}/>)
+    const result = otherWrapper.find('.deleteButton')
+    expect(result).toHaveLength(0)
+  })
 
   test('card name displays correctly', () => {
     const result = wrapper.find('.name')

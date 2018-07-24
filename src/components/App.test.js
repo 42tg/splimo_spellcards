@@ -3,11 +3,10 @@ import React from 'react';
 
 import {EventBus} from '../eventBus'
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+
 import firebase from 'firebase'
 import App from './App';
 import _ from 'lodash'
-Enzyme.configure({ adapter: new Adapter() });
 
 const TestCard = {
   name: 'TestCard',

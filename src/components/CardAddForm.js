@@ -14,24 +14,26 @@ class CardAddForm extends Component {
     const card = this.state.card
     if(e.target.options) {
       _.set(card, target, Array.from(e.target.options)
-        .filter(option => { console.log(option); return !!option.selected})
+        .filter(option => !!option.selected)
         .map(option => option.value)
         .join(', '))
     } else {
       _.set(card, target, e.target.value)
     }
     this.setState({ card : card})
-    console.log(target, card)
   }
+
   handleColorChange = (color) => {
     const state = this.state
     state.card.color = color.hex
     this.setState(() => state)
   }
+
   onSubmit = (e) => {
     e.preventDefault()
     this.props.bus.emit(EventTypes.CARD_ADDED, _.cloneDeep(this.state.card))
   }
+
   colorPalette = () => {
     return ['#5533B5','#7751B5','#CC51A6','#FF6589','#FF916B','#FFC55C','#F9F871','#9BDE7E','#4BBC8E','#039590','#1C6E7D','#2F4858','#000000','#444444','#888888','#cccccc','#dddddd','#eeeeee']
   }
@@ -72,7 +74,7 @@ class CardAddForm extends Component {
         <dt><label htmlFor="enchanted">Erfolgsgrade</label></dt>
           <dd><textarea onKeyUp={this.setValue.bind(null, 'erfolgsgrade.enchanted')} id="enchanted" type="text"/></dd>
 
-        <dt><button type="submit">Save</button><button type="reset">Reset</button></dt>
+        <dt><button type="submit" id="submitCardAddForm">Save</button><button type="reset">Reset</button></dt>
       </ol>
       <div>
         <Card card={this.state.card} hideDeleteButton={true}/>

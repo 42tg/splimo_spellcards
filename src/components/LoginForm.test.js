@@ -1,11 +1,8 @@
 import 'jsdom-global/register';
 import React from 'react';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 
 import {EventBus, EventTypes} from '../eventBus'
-
-Enzyme.configure({ adapter: new Adapter() });
 
 import {LoginForm} from './LoginForm'
 
