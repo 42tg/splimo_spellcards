@@ -4,7 +4,6 @@ import {EventTypes} from '../eventBus'
 
 const defaultStyle = {
   textAlign: 'center',
-  marginTop: '20px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
@@ -25,7 +24,7 @@ class UserBar extends Component{
   render() {
     const {user} = this.props
     return (
-      <div style={defaultStyle} className="userBar">
+      <div style={{...defaultStyle, flexDirection: 'column'}}className="userBar">
         {!user &&
          <LoginForm {...this.props}/> }
         {user && user.email &&
@@ -39,6 +38,7 @@ class UserBar extends Component{
             </button>
           </div>
         }
+        <hr style={{ width: '100%', border: '1px solid #ddd', marginBottom: '10px'}}/>
       </div>
     )
   }

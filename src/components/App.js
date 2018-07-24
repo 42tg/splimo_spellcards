@@ -95,7 +95,7 @@ class App extends Component {
       <div className="App">
         <UserBar {...props} user={this.state.user} />
         {this.state.auth.isLoggedIn &&
-          <div>
+          <div style={{display: 'flex'}}>
             <CardAddForm {...props}/>
             <div className="print">
               {this.state.cards.map((cardData, i) => {
