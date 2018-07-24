@@ -15,7 +15,10 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    props.bus.on(EventTypes.CARD_ADDED, this.saveCard)
+    props.bus.on(EventTypes.CARD_SAVE, this.saveCard)
+    props.bus.on(EventTypes.CARD_ADDED, this.addCard)
+
+
     props.bus.on(EventTypes.CARD_DELETED, this.deleteCard)
     props.bus.on(EventTypes.CARD_DELETE_ALL, this.resetAll)
 
@@ -23,8 +26,8 @@ class App extends Component {
     props.bus.on(EventTypes.USER_LOGOUT, this.logout)
     props.bus.on(EventTypes.USER_GOOGLE_LOGIN, Auth().loginWithGoogle)
 
-    Auth().onAuthStateChanged(this.checkLoginState)
 
+    Auth().onAuthStateChanged(this.checkLoginState)
     const cards = []
     this.state = {
       auth : {isLoggedIn : false},
@@ -36,6 +39,7 @@ class App extends Component {
     const isLoggedIn = await Auth().isLoggedIn()
     if(isLoggedIn)
     {
+      Database().onCardAdded(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_ADDED))
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
         user: await Auth().getUserData(),
@@ -50,10 +54,12 @@ class App extends Component {
     }
   }
 
-  counter = 0
   saveCard = async (card) => {
     if(_.isEmpty(card)) return
     card.id = await Database().addCard(card)
+  }
+
+  addCard = async (card) => {
     const newCards = this.state.cards
     newCards.push(card)
     this.setState({

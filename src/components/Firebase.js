@@ -70,6 +70,10 @@ export const Database = function() {
         }
       })
     },
+    onCardAdded: async function(callback) {
+      const ref = await firebase.database().ref(`cards/${userId}`)
+      ref.on('child_added', (data ) => {callback(data.val())} )
+    },
     getCards: function(){
       return new Promise(async (resolve,reject) => {
         try{

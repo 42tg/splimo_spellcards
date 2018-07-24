@@ -31,7 +31,7 @@ class CardAddForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.bus.emit(EventTypes.CARD_ADDED, _.cloneDeep(this.state.card))
+    this.props.bus.emit(EventTypes.CARD_SAVE, _.cloneDeep(this.state.card))
   }
 
   onReset = () => {

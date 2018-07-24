@@ -12,6 +12,7 @@ class EventBus {
 }
 
 const EventTypes = {
+  CARD_SAVE: 'CARD_SAVE',
   CARD_ADDED: 'CARD_ADDED',
   CARD_DELETED: 'CARD_DELETED',
   CARD_DELETE_ALL: 'CARD_DELETE_ALL',
