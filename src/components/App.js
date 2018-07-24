@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
-import {Card, EditableCard} from './Card.js'
 import {UserBar} from './UserBar'
+import {Card} from './Card'
+import {CardAddForm} from './CardAddForm'
 
 import {EventTypes} from '../eventBus'
 import {Auth, Database} from './Firebase'
+
+import _ from 'lodash'
 
 import './App.css'
 
@@ -48,6 +51,7 @@ class App extends Component {
 
   counter = 0
   saveCard = async (card) => {
+    if(_.isEmpty(card)) return
     card.id = await Database().addCard(card)
     const newCards = this.state.cards
     newCards.push(card)
@@ -71,7 +75,6 @@ class App extends Component {
 
   logout = async () => {
     await Auth().logout().catch(console.error)
-
   }
   login = async ({login, password}) => {
     await Auth().login(login,password)
@@ -92,10 +95,12 @@ class App extends Component {
         <UserBar {...props} user={this.state.user} />
         {this.state.auth.isLoggedIn &&
           <div>
-            <EditableCard {...props}/>
-            {this.state.cards.map((cardData, i) => {
-              return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
-            })}
+            <CardAddForm {...props}/>
+            <div className="print">
+              {this.state.cards.map((cardData, i) => {
+                return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
+              })}
+            </div>
           </div>
         }
       </div>

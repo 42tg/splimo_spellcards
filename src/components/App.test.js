@@ -37,7 +37,7 @@ describe('Mount the app Card', () => {
   })
 
   test('delete Function from App', (done) => {
-    appWrapper.instance().deleteCard(0).then(done).catch(err => done.fail(err))
+    appWrapper.instance().deleteCard(TestCard.id).then(done).catch(err => done.fail(err))
   })
 
   test('reset Function from App', (done) => {
@@ -49,7 +49,7 @@ describe('Mount the app Card', () => {
     const Card2 = _.clone(TestCard)
     await appWrapper.instance().saveCard(Card1).catch(err => done.fail(err))
     await appWrapper.instance().saveCard(Card2).catch(err => done.fail(err))
-    await appWrapper.instance().deleteCard(1).catch(err => done.fail(err))
+    await appWrapper.instance().deleteCard(Card1.id).catch(err => done.fail(err))
     await appWrapper.instance().resetAll().catch(err => done.fail(err))
     done()
   })

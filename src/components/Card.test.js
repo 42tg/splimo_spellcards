@@ -93,25 +93,3 @@ describe('Mount a Test Card', () => {
     expect(result.text()).toBe(TestCard.erfolgsgrade.enchanted)
   })
 })
-
-test('Editable Card', () => {
-  const Bus = new EventBus()
-  const saveFunction = jest.fn()
-  const resetFunction = jest.fn()
-  Bus.on(EventTypes.CARD_ADDED, saveFunction)
-  Bus.on(EventTypes.CARD_DELETE_ALL, resetFunction)
-
-  const editableWrapper = Enzyme.shallow(<EditableCard card={TestCard} bus={Bus}/>)
-
-  editableWrapper.instance().handleColorChange({hex: '#424242'})
-  editableWrapper.instance().saveStateName()
-  editableWrapper.instance().resetDefault()
-  editableWrapper.instance().colorPalette()
-
-  const saveSpell = editableWrapper.find('#saveSpell')
-  saveSpell.simulate('click')
-  const resetAll = editableWrapper.find('#deleteAll')
-  resetAll.simulate('click')
-  expect(saveFunction.mock.calls.length).toBe(1);
-  expect(resetFunction.mock.calls.length).toBe(1);
-})

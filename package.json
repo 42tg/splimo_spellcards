@@ -10,7 +10,6 @@
     "react": "^16.4.1",
     "react-color": "^2.14.1",
     "react-dom": "^16.4.1",
-    "react-inline-editing": "^1.0.10",
     "react-scripts": "1.1.4",
     "store": "^2.0.12"
   },

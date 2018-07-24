@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/42tg/splimo_spellcards/badge.svg?branch=master)](https://coveralls.io/github/42tg/splimo_spellcards?branch=master)
 # Spellcards Generator
 
-https://spellcard.42tg.de
+https://spellcards.42tg.de
 
 This little React App is my personal favorite project to work with React, Firebase and Javascript in an iterative way. 
 My personal goals are to unit test the components to get more experience with testing in the first place. 

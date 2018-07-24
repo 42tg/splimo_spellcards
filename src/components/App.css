@@ -5,12 +5,14 @@ body {
 }
 
 @media print {
-  .block.editable,
   .noprint,
-  .userBar {
-    display: none;
+  .userBar,
+  .deleteButton,
+  .CardForm {
+    display: none !important;
   }
-  .block:nth-child(9) {
+
+  .print:nth-child(9) {
     page-break-after: always;
   }
 }
@@ -112,3 +114,31 @@ div>button {
 .block>table td.enchanted {
   font-size: 0.9em;
 }
+
+
+.CardForm {
+  display:flex;
+}
+.CardForm {
+  margin: 10px;
+}
+.CardForm ol {
+  width: 210px;
+  display:inline-block;
+}
+.CardForm input, .CardForm textarea, .CardForm select, .CardForm button{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px 3px;
+  min-width: 191px;
+}
+.block-picker{
+  border: 3px solid #000;
+  border-radius: 9px !important;
+}
+
+
+
+
+
