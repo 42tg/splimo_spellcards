@@ -72,7 +72,11 @@ export const Database = function() {
     },
     onCardAdded: async function(callback) {
       const ref = await firebase.database().ref(`cards/${userId}`)
-      ref.on('child_added', (data ) => {callback(data.val())} )
+      ref.on('child_added', (data) => {
+        const card = data.val()
+        card.id = data.key
+        callback(card)
+      })
     },
     getCards: function(){
       return new Promise(async (resolve,reject) => {
@@ -109,6 +113,10 @@ export const Database = function() {
           reject (err)
         }
       })
-    }
+    },
+    onCardDeleted: async function(callback) {
+      const ref = await firebase.database().ref(`cards/${userId}`)
+      ref.on('child_removed', (data ) => {callback(data.key)} )
+    },
   }
 }

@@ -19,8 +19,8 @@ class App extends Component {
     props.bus.on(EventTypes.CARD_SAVE, this.saveCard)
     props.bus.on(EventTypes.CARD_ADDED, this.addCard)
 
-
-    props.bus.on(EventTypes.CARD_DELETED, this.deleteCard)
+    props.bus.on(EventTypes.CARD_DELETE, this.deleteCard)
+    props.bus.on(EventTypes.CARD_DELETED, this.deletedCard)
     props.bus.on(EventTypes.CARD_DELETE_ALL, this.resetAll)
 
     props.bus.on(EventTypes.USER_LOGIN, this.login)
@@ -38,11 +38,11 @@ class App extends Component {
   }
 
   checkLoginState = async () => {
-
     const isLoggedIn = await Auth().isLoggedIn()
     if(isLoggedIn)
     {
       Database().onCardAdded(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_ADDED))
+      Database().onCardDeleted(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_DELETED))
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
         user: await Auth().getUserData(),
@@ -64,6 +64,10 @@ class App extends Component {
     card.id = await Database().addCard(card)
   }
 
+  deleteCard = async (index) => {
+    await Database().deleteCard(index)
+  }
+
   addCard = async (card) => {
     const newCards = this.state.cards
     newCards.push(card)
@@ -77,8 +81,7 @@ class App extends Component {
     this.setState({ cards: []})
   }
 
-  deleteCard = async (index) => {
-    await Database().deleteCard(index)
+  deletedCard = async (index) => {
     const fewerCards = this.state.cards.filter((card) => card.id !== index)
     this.setState({
       cards: fewerCards

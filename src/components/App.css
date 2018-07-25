@@ -135,13 +135,17 @@ div>button {
   width: 210px;
   display:inline-block;
 }
-.CardForm input, .CardForm textarea, .CardForm select, .CardForm button{
+.CardForm input[type="text"], .CardForm textarea, .CardForm select, .CardForm button{
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 5px 10px;
   margin: 5px 3px;
   min-width: 191px;
 }
+.CardForm dt {
+  font-weight: 700;
+}
+
 .block-picker{
   border: 3px solid #000;
   border-radius: 9px !important;

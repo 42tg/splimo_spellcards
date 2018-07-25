@@ -6,7 +6,7 @@ class Card extends Component{
     return (
       <div className={`block`} style={{backgroundColor: this.props.card.color}}>
         {!this.props.hideDeleteButton &&
-          <button className="deleteButton" onClick={() => this.props.bus.emit(EventTypes.CARD_DELETED, this.props.index)}>Löschen</button>
+          <button className="deleteButton" onClick={() => this.props.bus.emit(EventTypes.CARD_DELETE, this.props.index)}>Löschen</button>
         }
         <table>
           <tbody>
