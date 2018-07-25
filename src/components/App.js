@@ -104,9 +104,11 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.loading &&
-          <div className="spinner">
-            <div className="double-bounce1"></div>
-            <div className="double-bounce2"></div>
+          <div class="sk-folding-cube">
+            <div class="sk-cube1 sk-cube"></div>
+            <div class="sk-cube2 sk-cube"></div>
+            <div class="sk-cube4 sk-cube"></div>
+            <div class="sk-cube3 sk-cube"></div>
           </div>
         }
         {!this.state.loading &&
