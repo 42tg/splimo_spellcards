@@ -81,7 +81,7 @@ describe('Card add form test', () => {
 
   test('final submit', () => {
     const callback = jest.fn()
-    Bus.on(EventTypes.CARD_ADDED, callback)
+    Bus.on(EventTypes.CARD_SAVE, callback)
     wrapper.find('.CardForm').simulate('submit', {preventDefault: jest.fn()})
     expect(callback).toBeCalledWith(TestCard)
   })
