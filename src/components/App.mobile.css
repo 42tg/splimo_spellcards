@@ -1,0 +1,32 @@
+@media only screen and (max-width: 375px) {
+  .contentWrapper{
+    flex-direction: column;
+  }
+
+  .CardForm {
+    flex-direction: column;
+    box-shadow: 0 2px 2px #ddd;
+    padding: 10px;
+    margin:0;
+    margin-bottom: 25px;
+  }
+  .CardForm > ol {
+    width: 100%;
+  }
+  .CardForm input, .CardForm textarea, .CardForm select, .CardForm button{
+    width:100%;
+  }
+  .CardForm > div{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .print{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+}

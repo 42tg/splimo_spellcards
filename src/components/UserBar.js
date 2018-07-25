@@ -38,7 +38,9 @@ class UserBar extends Component{
             </button>
           </div>
         }
-        <hr style={{ width: '100%', border: '1px solid #ddd', marginBottom: '10px'}}/>
+        {user && user.email &&
+          <hr style={{ width: '100%', border: '1px solid #ddd', marginBottom: '10px'}}/>
+        }
       </div>
     )
   }

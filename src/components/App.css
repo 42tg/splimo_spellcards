@@ -147,6 +147,9 @@ div>button {
   border-radius: 9px !important;
 }
 
+.contentWrapper {
+  display: flex;
+}
 
 
 

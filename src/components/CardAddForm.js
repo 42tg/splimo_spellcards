@@ -55,7 +55,7 @@ class CardAddForm extends Component {
           <dd><input onKeyUp={this.setValue.bind(null, 'name')} id="name" type="text"/></dd>
 
         <dt><label htmlFor="schwierigkeit">Schwierigkeit</label></dt>
-          <dd><select onChange={this.setValue.bind(null, 'schwierigkeit')} id="schwierigkeit">{schwierigkeiten.map((value, i) => (<option key={i} value={value}>{value}</option>))}</select><input type="text" onKeyUp={this.setValue.bind(null, 'schwierigkeit')}/> </dd>
+          <dd><select onChange={this.setValue.bind(null, 'schwierigkeit')} id="schwierigkeit">{schwierigkeiten.map((value, i) => (<option key={i} value={value}>{value}</option>))}</select><input type="text" placeholder="Wert" onKeyUp={this.setValue.bind(null, 'schwierigkeit')}/> </dd>
 
         <dt><label htmlFor="zauberdauer">Zauberdauer</label></dt>
           <dd><input onKeyUp={this.setValue.bind(null, 'zauberdauer')} id="zauberdauer" type="text"/></dd>

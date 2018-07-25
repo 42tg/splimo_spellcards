@@ -10,6 +10,7 @@ import {Auth, Database} from './Firebase'
 import _ from 'lodash'
 
 import './App.css'
+import './App.mobile.css'
 import './Loader.css'
 class App extends Component {
   constructor(props) {
@@ -115,7 +116,7 @@ class App extends Component {
           <div>
           <UserBar {...props} user={this.state.user} />
           {this.state.auth.isLoggedIn &&
-            <div style={{display: 'flex'}}>
+            <div className="contentWrapper">
               <CardAddForm {...props}/>
               <div className="print">
                 {this.state.cards.map((cardData, i) => {
