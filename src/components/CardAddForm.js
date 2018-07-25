@@ -49,7 +49,7 @@ class CardAddForm extends Component {
       'Auslösezeit', 'Erschöpfter Fokus', 'Kanalisierter Fokus', 'Reichweite', 'Schaden', 'Verzehrter Fokus', 'Wirkungsbereich', 'Wirkungsdauer'
     ]
     return(
-      <form className="CardForm" onSubmit={this.onSubmit} onReset={this.onReset} autocomplete="off">
+      <form className="CardForm" onSubmit={this.onSubmit} onReset={this.onReset} autoComplete="off">
       <ol>
         <dt><label htmlFor="name">Name</label></dt>
           <dd><input onKeyUp={this.setValue.bind(null, 'name')} id="name" type="text"/></dd>

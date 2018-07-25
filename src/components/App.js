@@ -10,7 +10,7 @@ import {Auth, Database} from './Firebase'
 import _ from 'lodash'
 
 import './App.css'
-
+import './Loader.css'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -31,11 +31,13 @@ class App extends Component {
     const cards = []
     this.state = {
       auth : {isLoggedIn : false},
-      cards : cards
+      cards : cards,
+      loading: true
     }
   }
 
   checkLoginState = async () => {
+
     const isLoggedIn = await Auth().isLoggedIn()
     if(isLoggedIn)
     {
@@ -43,13 +45,15 @@ class App extends Component {
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
         user: await Auth().getUserData(),
-        cards: await Database().getCards()
+        cards: await Database().getCards(),
+        loading: false
       })
     } else {
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
         user: null,
-        cards: []
+        cards: [],
+        loading: false
       })
     }
   }
@@ -99,15 +103,25 @@ class App extends Component {
     const {props} = this
     return (
       <div className="App">
-        <UserBar {...props} user={this.state.user} />
-        {this.state.auth.isLoggedIn &&
-          <div style={{display: 'flex'}}>
-            <CardAddForm {...props}/>
-            <div className="print">
-              {this.state.cards.map((cardData, i) => {
-                return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
-              })}
+        {this.state.loading &&
+          <div className="spinner">
+            <div className="double-bounce1"></div>
+            <div className="double-bounce2"></div>
+          </div>
+        }
+        {!this.state.loading &&
+          <div>
+          <UserBar {...props} user={this.state.user} />
+          {this.state.auth.isLoggedIn &&
+            <div style={{display: 'flex'}}>
+              <CardAddForm {...props}/>
+              <div className="print">
+                {this.state.cards.map((cardData, i) => {
+                  return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
+                })}
+              </div>
             </div>
+          }
           </div>
         }
       </div>
