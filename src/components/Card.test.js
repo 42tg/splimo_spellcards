@@ -1,28 +1,15 @@
-import 'jsdom-global/register';
-import React from 'react';
+import 'jsdom-global/register'
+import React from 'react'
 
-import Enzyme from 'enzyme';
+import Enzyme from 'enzyme'
 
 import {EventBus, EventTypes} from '../eventBus'
 
-import {Card} from './Card';
+import {Card} from './Card'
 
-const TestCard = {
-  name: 'TestCard',
-  color: 'purple',
-  schule: 'Beherrschung  0',
-  typus: 'Einstellung',
-  schwierigkeit: 'GW',
-  kosten: 'K1',
-  zauberdauer: '3 T',
-  reichweite: 'B',
-  wirkungsdauer: 'K',
-  wirkung: 'Der Zauberer verbessert die Einstellung des Ziels gegenüber einer von ihm bestimmten Person, Idee oder Sache um 1 Stufe (maximal auf Aufgeschlossen). Dieser Zauber benötigt weder Formel noch Geste.',
-  erfolgsgrade: {
-    verbesserung: 'Auslösezeit, Verstärken',
-    enchanted : '2 EG (Kosten +K1V1): Die Einstellung verbessert sich um insgesamt 2 Stufen (maximal auf Hilfsbereit).',
-  }
-}
+import MakeTestCard from './MakeTestCard'
+
+const TestCard = MakeTestCard()
 describe('Mount a Test Card', () => {
   const Bus = new EventBus()
   const wrapper = Enzyme.shallow(<Card card={TestCard} bus={Bus} />)
