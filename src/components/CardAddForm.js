@@ -75,7 +75,7 @@ class CardAddForm extends Component {
           <dd><input onKeyUp={this.setValue.bind(null, 'wirkungsdauer')} id="wirkungsdauer" type="text" defaultValue={this.state.card.wirkungsdauer}/></dd>
 
         <dt><label htmlFor="wirkung">Wirkung</label></dt>
-          <dd><textarea onKeyUp={this.setValue.bind(null, 'wirkung')} id="wirkung" type="text" value={this.state.card.wirkung || ''}/></dd>
+          <dd><textarea onKeyUp={this.setValue.bind(null, 'wirkung')} id="wirkung" type="text" defaultValue={this.state.card.wirkung || ''}/></dd>
 
         <dt><label htmlFor="verbesserung">Verbesserungen</label></dt>
         <dd><select onChange={this.setValue.bind(null, 'erfolgsgrade.verbesserung')} id="verbesserung" value={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.verbesserung) && this.state.card.erfolgsgrade.verbesserung.split(', ')} multiple size={verbesserungen.length}>
@@ -83,7 +83,7 @@ class CardAddForm extends Component {
         </select></dd>
 
         <dt><label htmlFor="enchanted">Erfolgsgrade</label></dt>
-          <dd><textarea onKeyUp={this.setValue.bind(null, 'erfolgsgrade.enchanted')} id="enchanted" type="text" value={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.enchanted) || ''}/></dd>
+          <dd><textarea onKeyUp={this.setValue.bind(null, 'erfolgsgrade.enchanted')} id="enchanted" type="text" defaultValue={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.enchanted) || ''}/></dd>
 
         <dt>
           <button type="submit" id="submitCardAddForm" >{this.state.editMode && 'Edit'} {!this.state.editMode && 'Save'}</button>
