@@ -59,16 +59,17 @@ div>button {
   position: relative;
 }
 
-.block>.deleteButton {
+.buttonBar {
   color: #ffffff;
-  background-color: #ff0000;
-  border: 1px solid #dddddd;
+
   position: absolute;
   left: 25%;
   display: none;
 }
-
-.block:hover>.deleteButton {
+.buttonbar > button {
+  border: 1px solid #dddddd;
+}
+.block:hover>.buttonBar {
   display: block;
 }
 
@@ -124,12 +125,11 @@ div>button {
   font-size: 0.9em;
 }
 
-
 .CardForm {
   display:flex;
 }
 .CardForm {
-  margin: 10px;
+  margin: 0 10px;
 }
 .CardForm ol {
   width: 210px;

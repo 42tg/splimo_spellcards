@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import { EventTypes } from '../eventBus';
 
+import _ from 'lodash'
+
 class Card extends Component{
   render(){
     return (
       <div className={`block`} style={{backgroundColor: this.props.card.color}}>
-        {!this.props.hideDeleteButton &&
-          <button className="deleteButton" onClick={() => this.props.bus.emit(EventTypes.CARD_DELETE, this.props.index)}>Löschen</button>
-        }
+        <div className="buttonBar">
+          {!this.props.hideDeleteButton &&
+            <button className="deleteButton" onClick={() => this.props.bus.emit(EventTypes.CARD_DELETE, this.props.index)}>Löschen</button>
+          }
+          {!this.props.hideEditButton &&
+            <button className="editButton" onClick={() => this.props.bus.emit(EventTypes.CARD_EDIT, _.cloneDeep(this.props.card))}>Edit</button>
+          }
+        </div>
         <table>
           <tbody>
           <tr>
@@ -35,7 +42,7 @@ class Card extends Component{
             </td>
           </tr>
           <tr>
-            <th className="erfolgsgrade" colSpan="6">{this.props.card.erfolgsgrade && 'Erfolgsgrade:'}</th>
+            <th className="erfolgsgrade" colSpan="6">{this.props.card.erfolgsgrade && (this.props.card.erfolgsgrade.enchanted || this.props.card.erfolgsgrade.verbesserung) && 'Erfolgsgrade:'}</th>
           </tr>
           <tr>
             <td className="verbesserung" colSpan="6">{(this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung) || ''}</td>

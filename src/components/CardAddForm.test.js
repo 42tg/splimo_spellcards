@@ -25,7 +25,7 @@ describe('Card add form test', () => {
   })
 
   test('Set schwierigkeit', () => {
-    wrapper.find('#schwierigkeit').simulate('change', {target:{ options: [{value: 'GW', selected :true}]}})
+    wrapper.find('#schwierigkeit').simulate('keyUp', {target:{ value: TestCard.schwierigkeit}})
     expect(wrapper.state().card.schwierigkeit).toBe(TestCard.schwierigkeit)
   })
 

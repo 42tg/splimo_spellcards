@@ -78,6 +78,25 @@ export const Database = function() {
         callback(card)
       })
     },
+    changeCard: function(card) {
+      return new Promise(async (resolve, reject) => {
+        try{
+          const id = card.id
+          await firebase.database().ref(`cards/${userId}/${id}`).update(card)
+          resolve(id)
+        } catch (err){
+          reject(err) //cannot test this need depency injection
+        }
+      })
+    },
+    onCardChanged: async function(callback){
+      const ref = await firebase.database().ref(`cards/${userId}`)
+      ref.on('child_changed', (data) => {
+        const card = data.val()
+        card.id = data.key
+        callback(card)
+      })
+    },
     getCards: function(){
       return new Promise(async (resolve,reject) => {
         try{

@@ -18,7 +18,7 @@ class App extends Component {
 
     props.bus.on(EventTypes.CARD_SAVE, this.saveCard)
     props.bus.on(EventTypes.CARD_ADDED, this.addCard)
-
+    props.bus.on(EventTypes.CARD_EDITED, this.editedCard)
     props.bus.on(EventTypes.CARD_DELETE, this.deleteCard)
     props.bus.on(EventTypes.CARD_DELETED, this.deletedCard)
     props.bus.on(EventTypes.CARD_DELETE_ALL, this.resetAll)
@@ -42,6 +42,7 @@ class App extends Component {
     if(isLoggedIn)
     {
       Database().onCardAdded(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_ADDED))
+      Database().onCardChanged(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_EDITED))
       Database().onCardDeleted(this.props.bus.emit.bind(this.props.bus, EventTypes.CARD_DELETED))
       this.setState({
         auth: { isLoggedIn : isLoggedIn},
@@ -61,6 +62,7 @@ class App extends Component {
 
   saveCard = async (card) => {
     if(_.isEmpty(card)) return
+    if(card.id) return await Database().changeCard(card)
     card.id = await Database().addCard(card)
   }
 
@@ -88,9 +90,21 @@ class App extends Component {
     })
   }
 
+  editedCard = async(changedCard) => {
+    const changedCards = this.state.cards.map(card =>{
+      if(card.id === changedCard.id) return changedCard
+      return card
+    })
+
+    this.setState({
+      cards: changedCards
+    })
+  }
+
   logout = async () => {
     await Auth().logout().catch(console.error)
   }
+
   login = async ({login, password}) => {
     await Auth().login(login,password)
     .catch(err => {
@@ -120,7 +134,7 @@ class App extends Component {
           <UserBar {...props} user={this.state.user} />
           {this.state.auth.isLoggedIn &&
             <div className="contentWrapper">
-              <CardAddForm {...props}/>
+              <CardAddForm {...props} editCard={this.state.editCard} />
               <div className="print">
                 {this.state.cards.map((cardData, i) => {
                   return (<Card {...props} key={i} card={cardData} index={cardData.id} />)
