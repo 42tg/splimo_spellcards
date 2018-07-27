@@ -4,11 +4,30 @@ import _ from 'lodash'
 import { EventTypes } from '../eventBus';
 import {Card} from './Card'
 
+function defaultState() {
+  return {
+    editMode: false,
+    card: {
+      name: '',
+      color: '',
+      schwierigkeit: '',
+      kosten: '',
+      zauberdauer: '',
+      reichweite: '',
+      wirkungsdauer: '',
+      wirkung: '',
+      erfolgsgrade: {
+        verbesserung: '',
+        enchanted : '',
+      }
+    }
+  }
+}
 class CardAddForm extends Component {
   constructor(props){
     super(props)
     this.props.bus.on(EventTypes.CARD_EDIT, this.editCard)
-    this.state = {card: {}}
+    this.state = defaultState()
   }
 
   setValue = (target, e) => {
@@ -38,11 +57,11 @@ class CardAddForm extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     this.props.bus.emit(EventTypes.CARD_SAVE, _.cloneDeep(this.state.card))
-    this.setState({editMode: false, card: {}})
+    this.setState(defaultState())
   }
 
   onReset = () => {
-    this.setState({editMode: false, card: {}})
+    this.setState(defaultState())
   }
 
   colorPalette = () => {
@@ -51,31 +70,31 @@ class CardAddForm extends Component {
   render() {
 
     const verbesserungen = [
-      'Auslösezeit', 'Erschöpfter Fokus', 'Kanalisierter Fokus', 'Reichweite', 'Schaden', 'Verzehrter Fokus', 'Wirkungsbereich', 'Wirkungsdauer'
+      'Auslösezeit', 'Erschöpfter Fokus', 'Kanalisierter Fokus', 'Reichweite', 'Schaden', 'Verstärken (s.u.)', 'Verzehrter Fokus', 'Wirkungsbereich', 'Wirkungsdauer'
     ]
     return(
       <form className="CardForm" onSubmit={this.onSubmit} onReset={this.onReset} autoComplete="off">
       <ol>
         <dt><label htmlFor="name">Name</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'name')} id="name" type="text" defaultValue={this.state.card.name}/></dd>
+          <dd><input onChange={this.setValue.bind(null, 'name')} id="name" type="text" value={this.state.card.name}/></dd>
 
         <dt><label htmlFor="schwierigkeit">Schwierigkeit</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'schwierigkeit')} id="schwierigkeit" type="text" defaultValue={this.state.card.schwierigkeit}/> </dd>
+          <dd><input onChange={this.setValue.bind(null, 'schwierigkeit')} id="schwierigkeit" type="text" value={this.state.card.schwierigkeit}/> </dd>
+
+        <dt><label htmlFor="kosten">Kosten</label></dt>
+          <dd><input onChange={this.setValue.bind(null, 'kosten')} id="kosten" type="text" value={this.state.card.kosten}/></dd>
 
         <dt><label htmlFor="zauberdauer">Zauberdauer</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'zauberdauer')} id="zauberdauer" type="text" defaultValue={this.state.card.zauberdauer}/></dd>
-
-        <dt><label htmlFor="kosten">Fokus</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'kosten')} id="kosten" type="text" defaultValue={this.state.card.kosten}/></dd>
+          <dd><input onChange={this.setValue.bind(null, 'zauberdauer')} id="zauberdauer" type="text" value={this.state.card.zauberdauer}/></dd>
 
         <dt><label htmlFor="reichweite">Reichweite</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'reichweite')} id="reichweite" type="text" defaultValue={this.state.card.reichweite}/></dd>
-
-        <dt><label htmlFor="wirkungsdauer">Wirkungsdauer</label></dt>
-          <dd><input onKeyUp={this.setValue.bind(null, 'wirkungsdauer')} id="wirkungsdauer" type="text" defaultValue={this.state.card.wirkungsdauer}/></dd>
+          <dd><input onChange={this.setValue.bind(null, 'reichweite')} id="reichweite" type="text" value={this.state.card.reichweite}/></dd>
 
         <dt><label htmlFor="wirkung">Wirkung</label></dt>
-          <dd><textarea onKeyUp={this.setValue.bind(null, 'wirkung')} id="wirkung" type="text" defaultValue={this.state.card.wirkung || ''}/></dd>
+          <dd><textarea onChange={this.setValue.bind(null, 'wirkung')} id="wirkung" type="text" value={this.state.card.wirkung || ''}/></dd>
+
+        <dt><label htmlFor="wirkungsdauer">Wirkungsdauer</label></dt>
+          <dd><input onChange={this.setValue.bind(null, 'wirkungsdauer')} id="wirkungsdauer" type="text" value={this.state.card.wirkungsdauer}/></dd>
 
         <dt><label htmlFor="verbesserung">Verbesserungen</label></dt>
         <dd><select onChange={this.setValue.bind(null, 'erfolgsgrade.verbesserung')} id="verbesserung" value={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.verbesserung) && this.state.card.erfolgsgrade.verbesserung.split(', ')} multiple size={verbesserungen.length}>
@@ -83,7 +102,7 @@ class CardAddForm extends Component {
         </select></dd>
 
         <dt><label htmlFor="enchanted">Erfolgsgrade</label></dt>
-          <dd><textarea onKeyUp={this.setValue.bind(null, 'erfolgsgrade.enchanted')} id="enchanted" type="text" defaultValue={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.enchanted) || ''}/></dd>
+          <dd><textarea onChange={this.setValue.bind(null, 'erfolgsgrade.enchanted')} id="enchanted" type="text" value={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.enchanted) || ''}/></dd>
 
         <dt>
           <button type="submit" id="submitCardAddForm" >{this.state.editMode && 'Edit'} {!this.state.editMode && 'Save'}</button>
