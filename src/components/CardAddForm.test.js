@@ -20,37 +20,37 @@ describe('Card add form test', () => {
   })
 
   test('Set name', () => {
-    wrapper.find('#name').simulate('keyUp', {target:{ value: TestCard.name}})
+    wrapper.find('#name').simulate('change', {target:{ value: TestCard.name}})
     expect(wrapper.state().card.name).toBe(TestCard.name)
   })
 
   test('Set schwierigkeit', () => {
-    wrapper.find('#schwierigkeit').simulate('keyUp', {target:{ value: TestCard.schwierigkeit}})
+    wrapper.find('#schwierigkeit').simulate('change', {target:{ value: TestCard.schwierigkeit}})
     expect(wrapper.state().card.schwierigkeit).toBe(TestCard.schwierigkeit)
   })
 
   test('Set kosten', () => {
-    wrapper.find('#kosten').simulate('keyUp', {target:{ value: TestCard.kosten}})
+    wrapper.find('#kosten').simulate('change', {target:{ value: TestCard.kosten}})
     expect(wrapper.state().card.kosten).toBe(TestCard.kosten)
   })
 
   test('Set zauberdauer', () => {
-    wrapper.find('#zauberdauer').simulate('keyUp', {target:{ value: TestCard.zauberdauer}})
+    wrapper.find('#zauberdauer').simulate('change', {target:{ value: TestCard.zauberdauer}})
     expect(wrapper.state().card.zauberdauer).toBe(TestCard.zauberdauer)
   })
 
   test('Set reichweite', () => {
-    wrapper.find('#reichweite').simulate('keyUp', {target:{ value: TestCard.reichweite}})
+    wrapper.find('#reichweite').simulate('change', {target:{ value: TestCard.reichweite}})
     expect(wrapper.state().card.reichweite).toBe(TestCard.reichweite)
   })
 
   test('Set wirkungsdauer', () => {
-    wrapper.find('#wirkungsdauer').simulate('keyUp', {target:{ value: TestCard.wirkungsdauer}})
+    wrapper.find('#wirkungsdauer').simulate('change', {target:{ value: TestCard.wirkungsdauer}})
     expect(wrapper.state().card.wirkungsdauer).toBe(TestCard.wirkungsdauer)
   })
 
   test('Set wirkung', () => {
-    wrapper.find('#wirkung').simulate('keyUp', {target:{ value: TestCard.wirkung}})
+    wrapper.find('#wirkung').simulate('change', {target:{ value: TestCard.wirkung}})
     expect(wrapper.state().card.wirkung).toBe(TestCard.wirkung)
   })
 
@@ -60,7 +60,7 @@ describe('Card add form test', () => {
   })
 
   test('Set erfolgsgrade.enchanted', () => {
-    wrapper.find('#enchanted').simulate('keyUp', {target:{ value: TestCard.erfolgsgrade.enchanted}})
+    wrapper.find('#enchanted').simulate('change', {target:{ value: TestCard.erfolgsgrade.enchanted}})
     expect(wrapper.state().card.erfolgsgrade.enchanted).toBe(TestCard.erfolgsgrade.enchanted)
   })
 
@@ -78,6 +78,19 @@ describe('Card add form test', () => {
 
   test('call reset', () => {
     wrapper.find('.CardForm').simulate('reset')
-    expect(wrapper.state().card).toEqual({})
+    expect(wrapper.state().card).toEqual({
+      name: '',
+      color: '',
+      schwierigkeit: '',
+      kosten: '',
+      zauberdauer: '',
+      reichweite: '',
+      wirkungsdauer: '',
+      wirkung: '',
+      erfolgsgrade: {
+        verbesserung: '',
+        enchanted : '',
+      }
+    })
   })
 })
