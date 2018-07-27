@@ -133,7 +133,7 @@ div>button {
   margin: 0 10px;
 }
 .CardForm ol {
-  width: 210px;
+  min-width: 210px;
   display:inline-block;
 }
 .CardForm input[type="text"], .CardForm textarea, .CardForm select, .CardForm button{
