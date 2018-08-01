@@ -66,7 +66,7 @@ class CardAddForm extends Component {
   }
 
   colorPalette = () => {
-    return ['#5533B5','#7751B5','#CC51A6','#FF6589','#FF916B','#FFC55C','#F9F871','#9BDE7E','#4BBC8E','#039590','#1C6E7D','#2F4858','#000000','#444444','#888888','#cccccc','#dddddd','#eeeeee']
+    return
   }
   render() {
 

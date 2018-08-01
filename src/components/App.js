@@ -9,8 +9,8 @@ import {Auth, Database} from './Firebase'
 
 import _ from 'lodash'
 
-import './App.css'
-import './App.mobile.css'
+import '../App.css'
+import '../App.mobile.css'
 import './Loader.css'
 class App extends Component {
   constructor(props) {
