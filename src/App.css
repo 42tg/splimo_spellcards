@@ -22,10 +22,10 @@ body {
 #signInWithGoogle {
   width:191px;
   height:46px;
-  background: url('../assets/btn_google_signin_light_normal_web.png');
+  background: url('./assets/btn_google_signin_light_normal_web.png');
 }
 #signInWithGoogle:hover, #signInWithGoogle:active {
-  background: url('../assets/btn_google_signin_light_pressed_web.png');
+  background: url('./assets/btn_google_signin_light_pressed_web.png');
 }
 .schwierigkeit>div>input,
 .zauberdauer>div>input,

@@ -1,9 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+
 import registerServiceWorker from './registerServiceWorker';
 
-import {EventBus} from './eventBus'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
 
-ReactDOM.render( <App bus = {new EventBus()}/>, document.getElementById('root'));
+import {addCard} from './cards/actions'
+import rootReducer from './installReducers'
+
+import App from './App'
+
+const store = createStore(rootReducer)
+store.dispatch(addCard({name: 'Test'}))
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App/>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();
+
