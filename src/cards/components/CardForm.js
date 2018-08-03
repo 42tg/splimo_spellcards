@@ -1,83 +1,97 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { BlockPicker } from 'react-color'
-const CardForm = ({
-  addCard
+
+import Card from './Card'
+
+const selector = formValueSelector("cardAdd"); // <-- same as form name
+const ValuedCard = connect(state => {
+  const values = selector(
+    state,
+    "name",
+    "schwierigkeit",
+    "kosten",
+    "zauberdauer",
+    "reichweite",
+    "wirkung",
+    "wirkungsdauer",
+    "erfolgsgrade.verbesserung",
+    "erfolgsgrade.enchanted",
+    "color"
+  );
+  return {
+    ...values
+  };
+})(Card);
+const CustomBlockPicker = ({ input: {value, onChange}}) => (<BlockPicker width="223px" color={value} onChangeComplete={({hex}) => onChange(hex)} triangle="hide" colors={colorPallete}/>)
+
+const InnerCardForm = ({
+  handleSubmit, pristine, reset, submitting
 }) => {
-  let name, color, schwierigkeit, zauberdauer, kosten, reichweite, wirkungsdauer, wirkung, verbesserung, enchanted
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const card = {name, color, schwierigkeit, zauberdauer, kosten, reichweite, wirkungsdauer, wirkung, erfolgsgrade: {verbesserung: (verbesserung || []).join(", "), enchanted} }
-    addCard(card)
-    onReset()
+  const selfSubmitHandler = (e) => {
+    handleSubmit(e)
+    reset()
   }
 
-  const onReset = () => {
-    name = undefined
-    color = undefined
-    schwierigkeit = undefined
-    zauberdauer = undefined
-    kosten = undefined
-    reichweite = undefined
-    wirkungsdauer = undefined
-    wirkung = undefined
-    verbesserung = undefined
-    enchanted = undefined
-  }
 
   const verbesserungen = [
     'Auslösezeit', 'Erschöpfter Fokus', 'Kanalisierter Fokus', 'Reichweite', 'Schaden', 'Verstärken (s.u.)', 'Verzehrter Fokus', 'Wirkungsbereich', 'Wirkungsdauer'
   ]
-  const handleColorChange  = ({hex}) => {
-    color = hex
-  }
-  const colorPallete = ['#5533B5','#7751B5','#CC51A6','#FF6589','#FF916B','#FFC55C','#F9F871','#9BDE7E','#4BBC8E','#039590','#1C6E7D','#2F4858','#000000','#444444','#888888','#cccccc','#dddddd','#eeeeee']
+
   return (
-  <form className="CardForm" onSubmit={onSubmit} onReset={onReset} autoComplete="off">
+  <form className="CardForm" onSubmit={selfSubmitHandler}  autoComplete="off">
   <ol>
     <dt><label htmlFor="name">Name</label></dt>
-      <dd><input id="name" type="text" value={name} onChange={(e)=> name = e.target.value }/></dd>
+      <dd><Field component="input" id="name" name="name" type="text"/></dd>
 
     <dt><label htmlFor="schwierigkeit">Schwierigkeit</label></dt>
-      <dd><input id="schwierigkeit" type="text" value={schwierigkeit} onChange={(e)=> schwierigkeit = e.target.value }/> </dd>
+      <dd><Field component="input" id="schwierigkeit" name="schwierigkeit" type="text"/> </dd>
 
     <dt><label htmlFor="kosten">Kosten</label></dt>
-      <dd><input id="kosten" type="text" value={kosten} onChange={(e)=> kosten = e.target.value }/></dd>
+      <dd><Field component="input" id="kosten" name="kosten" type="text"/></dd>
 
     <dt><label htmlFor="zauberdauer">Zauberdauer</label></dt>
-      <dd><input id="zauberdauer" type="text" value={zauberdauer} onChange={(e)=> zauberdauer = e.target.value }/></dd>
+      <dd><Field component="input" id="zauberdauer" name="zauberdauer" type="text"/></dd>
 
     <dt><label htmlFor="reichweite">Reichweite</label></dt>
-      <dd><input id="reichweite" type="text" value={reichweite} onChange={(e)=> reichweite = e.target.value }/></dd>
+      <dd><Field component="input" id="reichweite" name="reichweite" type="text"/></dd>
 
     <dt><label htmlFor="wirkung">Wirkung</label></dt>
-      <dd><textarea id="wirkung" type="text" value={wirkung} onChange={(e)=> wirkung = e.target.value }/></dd>
+      <dd><Field component="textarea" id="wirkung" name="wirkung" type="text"/></dd>
 
     <dt><label htmlFor="wirkungsdauer">Wirkungsdauer</label></dt>
-      <dd><input id="wirkungsdauer" type="text" value={wirkungsdauer} onChange={(e)=> wirkungsdauer = e.target.value }/></dd>
+      <dd><Field component="input" id="wirkungsdauer" name="wirkungsdauer" type="text"/></dd>
 
     <dt><label htmlFor="verbesserung">Verbesserungen</label></dt>
-    <dd><select id="verbesserung" value={verbesserung} multiple size={verbesserungen.length}
-      onChange={(e) => {
-        e.preventDefault()
-        verbesserung = Array.from(e.target.selectedOptions)
-        .map(option => option.value)
-      }}>
-      {verbesserungen.map((value, i) => (<option key={i} value={value}>{value}</option>))}
-    </select></dd>
+    <dd><Field component="select" id="verbesserung" name="erfolgsgrade.verbesserung" multiple size={verbesserungen.length}>
+      {verbesserungen.map((value, i) => (<option key={i} >{value}</option>))}
+    </Field></dd>
 
     <dt><label htmlFor="enchanted">Erfolgsgrade</label></dt>
-      <dd><textarea id="enchanted" type="text" value={enchanted} onChange={(e)=> enchanted = e.target.value }/></dd>
+      <dd><Field component="textarea" id="enchanted" name="erfolgsgrade.enchanted" type="text" /></dd>
     <dt>
-      <button type="submit" id="submitCardAddForm">Save</button>
-      <button type="reset">Reset</button>
+      <button type="submit" disabled={pristine || submitting}>Submit</button>
+      <button type="button" disabled={pristine || submitting} onClick={reset}>
+          Clear Values
+      </button>
     </dt>
   </ol>
   <div>
-    <BlockPicker width="223px" color={color} onChangeComplete={handleColorChange} triangle="hide" colors={colorPallete}/>
+    <ValuedCard/>
+    <Field name="color" component={CustomBlockPicker}/>
   </div>
   </form>
 )}
+const colorPallete = ['#5533B5','#7751B5','#CC51A6','#FF6589','#FF916B','#FFC55C','#F9F871','#9BDE7E','#4BBC8E','#039590','#1C6E7D','#2F4858','#000000','#444444','#888888','#cccccc','#dddddd','#eeeeee']
 
+const ReduxedCardForm = reduxForm({ form: 'cardAdd' })(InnerCardForm)
+const CardForm = ({addCard}) => {
+  const submit = (values) => {
+    addCard(values)
+  }
+  return (<ReduxedCardForm onSubmit={submit} />)
+}
 export default CardForm
+

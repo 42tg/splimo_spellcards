@@ -5,13 +5,18 @@ import {CardListContainer, CardFormContainer} from './cards/container'
 import './App.css'
 import './App.mobile.css'
 
-const App = () => (
+const App = () => {
+  const submit = (values) => {
+    console.log(values)
+  }
+  return (
   <div>
-    <CardFormContainer />
+    <CardFormContainer onSubmit={submit} />
     <div>
 
     </div>
     <CardListContainer />
   </div>
 )
+}
 export default App

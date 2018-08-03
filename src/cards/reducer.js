@@ -1,5 +1,4 @@
 const cards = (state = [], action) => {
-  console.log(action)
   switch (action.type) {
     case 'ADD_CARD':
        return [ ...state, action.card]

@@ -19,11 +19,16 @@ export const CardListContainer = connect(
   CardListContainerMapDispatchToProps
 )(CardList)
 
+const CardFormContainerMapStateToProps = state => {
+  return {
+    cardAdd: state.cardAdd
+  }
+}
 const CardFormContainerMapDispatchToProps = dispatch => ({
   addCard: card => dispatch(addCard(card))
 })
 
 export const CardFormContainer = connect(
-  null,
+  CardFormContainerMapStateToProps,
   CardFormContainerMapDispatchToProps
 )(CardForm)
