@@ -2,6 +2,7 @@ import React from 'react'
 
 const Card = ({
   deleteCard,
+  editCard,
   id,
   name,
   color,
@@ -14,10 +15,11 @@ const Card = ({
   erfolgsgrade
 }) => (
   <div className={`block`} style={{backgroundColor: color}}>
-    { deleteCard &&
-     <div className="buttonBar">
-        <button className="deleteButton" onClick={() => deleteCard(id)}>Löschen</button>
-    </div>}
+   
+    <div className="buttonBar">
+     {deleteCard && <button className="deleteButton" onClick={() => deleteCard(id)}>Löschen</button>}
+     {editCard && <button className="updateButton" onClick={() => editCard(id , {id, name, color, schwierigkeit, zauberdauer, kosten,reichweite, wirkungsdauer, wirkung, erfolgsgrade} )}>Editieren</button>}
+    </div>
     <table>
       <tbody>
       <tr>
@@ -48,7 +50,7 @@ const Card = ({
         <th className="erfolgsgrade" colSpan="6">{erfolgsgrade && (erfolgsgrade.enchanted || erfolgsgrade.verbesserung) && 'Erfolgsgrade:'}</th>
       </tr>
       <tr>
-        <td className="verbesserung" colSpan="6">{(erfolgsgrade && erfolgsgrade.verbesserung) || ''}</td>
+        <td className="verbesserung" colSpan="6">{(erfolgsgrade && erfolgsgrade.verbesserung.join(', ')) || ''}</td>
       </tr>
       <tr>
         <td className="enchanted" colSpan="6">{(erfolgsgrade && erfolgsgrade.enchanted) || ''}</td>

@@ -1,7 +1,7 @@
 import CardList from './components/CardList'
 import CardForm from './components/CardForm'
 import { connect } from 'react-redux'
-import { addCard, updateCard, deleteCard } from './actions'
+import { addCard, updateCard, deleteCard, editCard} from './actions'
 
 
 const CardListContainerMapStateToProps = state => {
@@ -10,8 +10,8 @@ const CardListContainerMapStateToProps = state => {
   }
 }
 const CardListContainerMapDispatchToProps = dispatch => ({
-  updateCard: (id, card) => dispatch(updateCard(id, card)),
-  deleteCard: id => dispatch(deleteCard(id))
+  editCard: (id, card) => dispatch(editCard(id, card)),
+  deleteCard: id => dispatch(deleteCard(id)),
 })
 
 export const CardListContainer = connect(
@@ -25,7 +25,8 @@ const CardFormContainerMapStateToProps = state => {
   }
 }
 const CardFormContainerMapDispatchToProps = dispatch => ({
-  addCard: card => dispatch(addCard(card))
+  addCard: card => dispatch(addCard(card)),
+  updateCard: (id, card) => dispatch(updateCard(id, card))
 })
 
 export const CardFormContainer = connect(

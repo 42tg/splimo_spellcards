@@ -8,11 +8,11 @@ import {createStore} from 'redux'
 
 import {addCard} from './cards/actions'
 import rootReducer from './installReducers'
-
+import makeTestCard from './components/MakeTestCard'
 import App from './App'
 
 const store = createStore(rootReducer)
-store.dispatch(addCard({name: 'Test'}))
+store.dispatch(addCard(makeTestCard()))
 
 ReactDOM.render(
   <Provider store={store}>
