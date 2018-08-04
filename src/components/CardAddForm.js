@@ -36,7 +36,7 @@ class CardAddForm extends Component {
       const selectedOptions = Array.from(e.target.options)
       .filter(option => !!option.selected)
       .map(option => option.value)
-      _.set(card, target, selectedOptions.join(', '))
+      _.set(card, target, selectedOptions)
     } else {
       _.set(card, target, e.target.value)
     }
@@ -98,7 +98,7 @@ class CardAddForm extends Component {
           <dd><input onChange={this.setValue.bind(null, 'wirkungsdauer')} id="wirkungsdauer" type="text" value={this.state.card.wirkungsdauer}/></dd>
 
         <dt><label htmlFor="verbesserung">Verbesserungen</label></dt>
-        <dd><select onChange={this.setValue.bind(null, 'erfolgsgrade.verbesserung')} id="verbesserung" value={((this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.verbesserung) || "").split(", ")} multiple size={verbesserungen.length}>
+        <dd><select onChange={this.setValue.bind(null, 'erfolgsgrade.verbesserung')} id="verbesserung" value={(this.state.card.erfolgsgrade && this.state.card.erfolgsgrade.verbesserung)} multiple size={verbesserungen.length}>
           {verbesserungen.map((value, i) => (<option key={i} value={value}>{value}</option>))}
         </select></dd>
 

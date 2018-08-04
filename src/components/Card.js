@@ -45,7 +45,7 @@ class Card extends Component{
             <th className="erfolgsgrade" colSpan="6">{this.props.card.erfolgsgrade && (this.props.card.erfolgsgrade.enchanted || this.props.card.erfolgsgrade.verbesserung) && 'Erfolgsgrade:'}</th>
           </tr>
           <tr>
-            <td className="verbesserung" colSpan="6">{(this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung) || ''}</td>
+            <td className="verbesserung" colSpan="6">{((this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.verbesserung) || []).join(", ")}</td>
           </tr>
           <tr>
             <td className="enchanted" colSpan="6">{(this.props.card.erfolgsgrade && this.props.card.erfolgsgrade.enchanted) || ''}</td>

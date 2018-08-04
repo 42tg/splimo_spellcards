@@ -82,7 +82,7 @@ describe('Mount a Test Card', () => {
 
   test('card verbesserung is displayed correctly',() => {
     const result = wrapper.find('.verbesserung')
-    expect(result.text()).toBe(TestCard.erfolgsgrade.verbesserung)
+    expect(result.text()).toBe(TestCard.erfolgsgrade.verbesserung.join(", "))
   })
   test('card enchanted is displayed correctly',() => {
     const result = wrapper.find('.enchanted')

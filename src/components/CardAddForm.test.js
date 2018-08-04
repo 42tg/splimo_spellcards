@@ -55,8 +55,8 @@ describe('Card add form test', () => {
   })
 
   test('Set erfolgsgrade.verbesserung', () => {
-    wrapper.find('#verbesserung').simulate('change', {target:{ options: [{value: 'Auslösezeit', selected :true}, {value: 'Verstärken', selected: true}]}})
-    expect(wrapper.state().card.erfolgsgrade.verbesserung).toBe(TestCard.erfolgsgrade.verbesserung)
+    wrapper.find('#verbesserung').simulate('change', {target:{ options: [{value: 'Auslösezeit', selected :true}, {value: 'Verstärken (s.u.)', selected: true}]}})
+    expect(wrapper.state().card.erfolgsgrade.verbesserung).toEqual(TestCard.erfolgsgrade.verbesserung)
   })
 
   test('Set erfolgsgrade.enchanted', () => {
