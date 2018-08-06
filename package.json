@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.3.0",
+    "immutable": "^3.8.2",
     "lodash": "^4.17.10",
     "react": "16",
     "react-color": "^2.14.1",

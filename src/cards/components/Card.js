@@ -15,10 +15,16 @@ const Card = ({
   erfolgsgrade
 }) => (
   <div className={`block`} style={{backgroundColor: color}}>
-   
+
     <div className="buttonBar">
-     {deleteCard && <button className="deleteButton" onClick={() => deleteCard(id)}>Löschen</button>}
-     {editCard && <button className="updateButton" onClick={() => editCard(id , {id, name, color, schwierigkeit, zauberdauer, kosten,reichweite, wirkungsdauer, wirkung, erfolgsgrade} )}>Editieren</button>}
+     {deleteCard
+      && <button className="deleteButton"
+        onClick={() => deleteCard(id)}>
+        Löschen</button>}
+     {editCard
+      && <button className="updateButton"
+        onClick={() => editCard(id , {id, name, color, schwierigkeit, zauberdauer, kosten,reichweite, wirkungsdauer, wirkung, erfolgsgrade})}>
+        Editieren</button>}
     </div>
     <table>
       <tbody>

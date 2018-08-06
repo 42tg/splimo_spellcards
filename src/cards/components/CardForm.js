@@ -5,7 +5,7 @@ import { BlockPicker } from 'react-color'
 
 import Card from './Card'
 
-const selector = formValueSelector("cardAdd"); 
+const selector = formValueSelector("cardAdd");
 const extractFormValues = state => {
   const values = selector(
     state,
@@ -38,6 +38,7 @@ const InnerCardForm = ({
   const verbesserungen = [
     'Auslösezeit', 'Erschöpfter Fokus', 'Kanalisierter Fokus', 'Reichweite', 'Schaden', 'Verstärken (s.u.)', 'Verzehrter Fokus', 'Wirkungsbereich', 'Wirkungsdauer'
   ]
+
   return (
   <form className="CardForm" onSubmit={selfSubmitHandler}  autoComplete="off">
   <ol>
@@ -84,6 +85,7 @@ const InnerCardForm = ({
   </div>
   </form>
 )}
+
 const colorPallete = ['#5533B5','#7751B5','#CC51A6','#FF6589','#FF916B','#FFC55C','#F9F871','#9BDE7E','#4BBC8E','#039590','#1C6E7D','#2F4858','#000000','#444444','#888888','#cccccc','#dddddd','#eeeeee']
 
 const ReduxedCardForm = reduxForm({ form: 'cardAdd' })(InnerCardForm)

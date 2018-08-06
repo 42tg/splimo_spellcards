@@ -10,11 +10,14 @@ body {
   .noprint,
   .userBar,
   .deleteButton,
-  .editButton,
+  .updateButton,
   .CardForm {
     display: none !important;
   }
 
+  .grid {
+    display: block;
+  }
   .print:nth-child(9) {
     page-break-after: always;
   }
@@ -87,8 +90,8 @@ div>button {
 .block {
   display: inline-block;
   font-size: 12px;
-  height: 319px;
-  width: 222px;
+  height: 339px;
+  width: 237px;
   border: 3px solid #000000;
   margin: 0 1px 0 0;
   padding: 10px 10px;
@@ -101,7 +104,7 @@ div>button {
   background-color: #ffffff;
   height: 100%;
   border-radius: 5px;
-  min-width: 196px;
+  min-width: 211px;
 }
 
 .block>table h2 {
@@ -156,6 +159,10 @@ div>button {
   display: flex;
 }
 
-
-
+@media screen {
+  .grid {
+    display:grid;
+    grid-template-columns: 1fr 4fr;
+  }
+}
 

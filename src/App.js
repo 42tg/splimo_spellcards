@@ -1,21 +1,20 @@
 import React from 'react'
 
 import {CardListContainer, CardFormContainer} from './cards/container'
+import {UserBarContainer } from './firebase/container'
 
 import './App.css'
 import './App.mobile.css'
 
 const App = () => {
-  const submit = (values) => {
-    console.log(values)
-  }
+
   return (
   <div>
-    <CardFormContainer onSubmit={submit} />
-    <div>
-
+    <UserBarContainer />
+    <div className="grid">
+      <CardFormContainer />
+      <CardListContainer />
     </div>
-    <CardListContainer />
   </div>
 )
 }

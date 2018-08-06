@@ -1,4 +1,6 @@
-const chars = (state = [], action) => {
+import {List} from 'immutable'
+
+const chars = (state = List(), action) => {
   switch (action.type) {
       default:
       return state
