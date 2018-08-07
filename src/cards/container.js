@@ -1,7 +1,7 @@
 import CardList from './components/CardList'
 import CardForm from './components/CardForm'
 import { connect } from 'react-redux'
-import { addCard, updateCard, deleteCard, editCard} from './actions'
+import { addCard, updateCard, deleteCard, editCard } from './actions'
 
 
 const CardListContainerMapStateToProps = state => {

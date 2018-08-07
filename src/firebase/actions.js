@@ -1,11 +1,8 @@
-const userLoggedIn = user => {
-  console.log(user)
-  return ({
+export const userLoggedIn = (user) => ({
   type: 'USER_LOGIN',
   user
 })
-}
-const userLoggedOut = () => ({
+export const userLoggedOut = () => ({
   type: 'USER_LOGOUT',
 })
 

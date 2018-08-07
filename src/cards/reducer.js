@@ -13,6 +13,8 @@ const cards = (state = List(), action) => {
         }
         return card
       })
+    case 'USER_LOGOUT':
+      return List()
     default:
       return state
   }

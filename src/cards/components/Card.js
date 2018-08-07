@@ -56,7 +56,7 @@ const Card = ({
         <th className="erfolgsgrade" colSpan="6">{erfolgsgrade && (erfolgsgrade.enchanted || erfolgsgrade.verbesserung) && 'Erfolgsgrade:'}</th>
       </tr>
       <tr>
-        <td className="verbesserung" colSpan="6">{(erfolgsgrade && erfolgsgrade.verbesserung.join(', ')) || ''}</td>
+        <td className="verbesserung" colSpan="6">{(((erfolgsgrade &&  erfolgsgrade.verbesserung) || []).join(', ')) || ''}</td>
       </tr>
       <tr>
         <td className="enchanted" colSpan="6">{(erfolgsgrade && erfolgsgrade.enchanted) || ''}</td>

@@ -15,10 +15,6 @@ const inputStyle = {
 
 }
 class UserBar extends Component{
-  constructor(props){
-    super(props)
-    console.log(props)
-  }
   logout = () => {
     this.props.logout()
   }
