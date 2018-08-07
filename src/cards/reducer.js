@@ -1,7 +1,6 @@
 import {List} from 'immutable'
 
 const cards = (state = List(), action) => {
-  console.log(action)
   switch (action.type) {
     case 'ADD_CARD':
        return state.push(action.card)
