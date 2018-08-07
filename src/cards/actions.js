@@ -5,7 +5,6 @@ export const addCard = card => ({
 })
 
 export const updateCard = (id, card) => {
-  console.log(id,card)
   return ({
   type: 'UPDATE_CARD',
   id,

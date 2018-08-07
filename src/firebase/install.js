@@ -18,18 +18,15 @@ const config = {
 firebase.initializeApp(config)
 const installFirebaseEvents = async (dispatch) => {
    const app = await firebase.app()
-
   await app.auth().onAuthStateChanged( async (user) => {
     if(user){
       dispatch(userLoggedIn(user))
-
       const rc = await registerCallbacks(app)(user.uid)
       rc.onCardAdded(card => dispatch(addCard(card)))
       rc.onCardChanged(card => dispatch(updateCard(card.id, card)))
       rc.onCardDeleted(id => dispatch(deleteCard(id)))
     }
   })
-
   return firebaseActions(app)
 }
 
@@ -40,12 +37,12 @@ export const firebaseActions = app => {
     return app.auth().signInWithEmailAndPassword(email, password).then(result => result.user.toJSON()).catch(console.error)
   },
   loginWithGoogle : function() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      return app.auth().signInWithPopup(provider).then(result => result.user.toJSON()).catch(console.error)
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return app.auth().signInWithPopup(provider).then(result => result.user.toJSON()).catch(console.error)
   },
   logout: async function() {
-      if (app.auth.currentUser == null) return
-      return await app.auth.signOut()
+    if (app.auth.currentUser == null) return
+    return await app.auth.signOut()
   }
 })
 }
@@ -57,7 +54,6 @@ const registerCallbacks = app => userId => ({
       const card = data.val()
       card.id = data.key
       if(_.get(card, 'erfolgsgrade.verbesserung')) {
-        console.log(card)
         if(!Array.isArray(_.get(card, 'erfolgsgrade.verbesserung')))
         {
           card.erfolgsgrade.verbesserung = card.erfolgsgrade.verbesserung.split(', ')
@@ -75,10 +71,10 @@ const registerCallbacks = app => userId => ({
     })
   },
   onCardDeleted : async function(callback) {
-      const ref = await app.database().ref(`cards/${userId}`)
-      ref.on('child_removed', (data) => {
-        callback(data.key)
-      })
+    const ref = await app.database().ref(`cards/${userId}`)
+    ref.on('child_removed', (data) => {
+      callback(data.key)
+    })
   }
 })
 
