@@ -24,20 +24,19 @@ const installFirebaseEvents = async (dispatch) => {
       dispatch(userLoggedIn(user))
 
       const rc = await registerCallbacks(app)(user.uid)
-      //rc.getSavedCards(cards => cards.map(card => dispatch(addCard(card))))
       rc.onCardAdded(card => dispatch(addCard(card)))
       rc.onCardChanged(card => dispatch(updateCard(card.id, card)))
       rc.onCardDeleted(id => dispatch(deleteCard(id)))
     }
   })
 
-  return firebaseActions(app)(dispatch)
+  return firebaseActions(app)
 }
 
-export const firebaseActions = app => dispatch =>{
+export const firebaseActions = app => {
 
  return ({
-  loginWithEmail : function (email, password, persistenceType) {
+  loginWithEmail : function (email, password) {
     return app.auth().signInWithEmailAndPassword(email, password).then(result => result.user.toJSON()).catch(console.error)
   },
   loginWithGoogle : function() {
@@ -50,29 +49,8 @@ export const firebaseActions = app => dispatch =>{
   }
 })
 }
-const registerCallbacks = app => userId => ({
-  getSavedCards: async function(callback) {
 
-      try{
-        const ref = await app.database().ref(`cards/${userId}`).once('value')
-        const result = []
-        ref.forEach((item) => {
-          const tmp = item.val()
-          tmp.id = item.key
-          if(_.get(tmp, 'erfolgsgrade.verbesserung')) {
-            console.log(tmp)
-            if(!Array.isArray(_.get(tmp, 'erfolgsgrade.verbesserung')))
-            {
-              tmp.erfolgsgrade.verbesserung = tmp.erfolgsgrade.verbesserung.split(', ')
-            }
-          }
-          result.push(tmp)
-        })
-        callback(result)
-      } catch (err) {
-        console.error(err)
-      }
-  },
+const registerCallbacks = app => userId => ({
   onCardAdded : async function(callback) {
     const ref = await app.database().ref(`cards/${userId}`)
     ref.on('child_added', (data) => {
