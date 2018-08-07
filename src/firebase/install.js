@@ -31,7 +31,6 @@ const installFirebaseEvents = async (dispatch) => {
 }
 
 export const firebaseActions = app => {
-
  return ({
   loginWithEmail : function (email, password) {
     return app.auth().signInWithEmailAndPassword(email, password).then(result => result.user.toJSON()).catch(console.error)
