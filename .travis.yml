@@ -10,8 +10,6 @@ jobs:
   include:
     - stage: test
       script: yarn coverage
-      after_script: # Upload coverage reports
-        - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls
     - stage: build
       script: yarn build
     - stage: deploy
