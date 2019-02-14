@@ -9,7 +9,7 @@ cache:
 jobs:
   include:
     - stage: test
-      script: npm run coverage
+      script: npm run coverage -- --detectOpenHandles
     - stage: build
       script: npm run build
     - stage: deploy
