@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -36,11 +36,10 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.1",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jest-junit": "^5.1.0",
-    "jsdom": "^11.11.0",
-    "jsdom-global": "^3.0.2"
+    "jest-junit": "^5.1.0"
   },
   "browserslist": {
     "development": [
