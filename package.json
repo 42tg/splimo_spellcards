@@ -10,7 +10,7 @@
     "react": "16",
     "react-color": "^2.14.1",
     "react-dom": "16",
-    "react-redux": "^6.0.0",
+    "react-redux": "^7.0.1",
     "react-scripts": "^2.0.0-next.3e165448",
     "redux": "^4.0.0",
     "redux-form": "^8.1.0",
