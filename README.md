@@ -8,3 +8,4 @@ This little React App is my personal favorite project to work with React, Fireba
 My personal goals are to unit test the components to get more experience with testing in the first place. 
 
 If you are a seeing some improvements for me in the code base feel free to suggest it with an issue and tell me what I can do better. 
+
